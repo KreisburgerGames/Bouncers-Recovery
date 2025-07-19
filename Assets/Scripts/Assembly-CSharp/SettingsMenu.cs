@@ -35,7 +35,7 @@ public class SettingsMenu : MonoBehaviour
 	{
 		print(index);
 		print(Screen.currentResolution.width.ToString() + " x " + Screen.currentResolution.height.ToString() + " @ " + Screen.currentResolution.refreshRate.ToString());
-		graphicsDropdown.value = graphicsDropdown.options.FindIndex(x => x.text == Screen.currentResolution.width.ToString() + " x " + Screen.currentResolution.height.ToString() + " @ " + Screen.currentResolution.refreshRate.ToString());
+		resolutionDropdown.value = resolutionDropdown.options.FindIndex(x => x.text == Screen.currentResolution.width.ToString() + " x " + Screen.currentResolution.height.ToString() + " @ " + Screen.currentResolution.refreshRate.ToString());
 	}
 
 	private void Awake()
@@ -109,8 +109,15 @@ public class SettingsMenu : MonoBehaviour
 			index++;
 		}
 		resolutionDropdown.AddOptions(list);
-		resolutionDropdown.RefreshShownValue();
 		CheckGraphics();
+		if (!PlayerPrefs.HasKey("graphics"))
+		{
+			graphicsDropdown.value = 2;
+		}
+		else
+		{
+			graphicsDropdown.value = PlayerPrefs.GetInt("graphics");
+		}
 	}
 
 	public void SetResolution(int resIndex)
