@@ -144,7 +144,6 @@ GameObject:
   - component: {fileID: 47}
   - component: {fileID: 33}
   - component: {fileID: 74}
-  - component: {fileID: 73}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1491,23 +1490,6 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: You Died!
---- !u!114 &73
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708136152, guid: e161fae64b898bc22624d03ed611378f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: caf838d0fe3510f438c6bdfa07ef8727, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 0
 --- !u!114 &74
 MonoBehaviour:
   m_ObjectHideFlags: 0
