@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: 0234e2ff4c72e45419656a94562b3638
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: 61f879488db337d4a94efa57124b9882
+  - enabled: 1
+    path: Assets/Scenes/Death.unity
+    guid: 1e2be2d28bf0082418d2fff41e747be6
+  - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: bc0ef0fd20bf1fc49b4a3a40858c25bb
+  - enabled: 1
+    path: Assets/Scenes/Difficulty Choice.unity
+    guid: d1aef5c09576bc64a8d19576d7bc6ad2
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: d5e8c9c55f445444e960adcccdcbf91f
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 6198c1c01694cd34d823e17283a09a9d
+  - enabled: 1
+    path: Assets/Scenes/Inventory.unity
+    guid: 37259d8abf7bc4941a953a1331cb1637
+  - enabled: 1
+    path: Assets/Scenes/Leaderboard.unity
+    guid: 9430f0a64c316004a9b1e1ec8fafda3f
+  - enabled: 1
+    path: Assets/Scenes/LeaderboardsSelect.unity
+    guid: fea0ee158bfdfa9408a35d7b0d84ba18
+  m_configObjects: {}

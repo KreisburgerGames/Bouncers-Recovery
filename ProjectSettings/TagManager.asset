@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Bouncer
+  - Countdown
+  - Audio
+  - Asteroid
+  - Warning
+  - Dasher
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Vingette
+  - Water
+  - UI
+  - Glow
+  - Mini Square Spawn Particle
+  - Mini Square Death Particle
+  - Mini Suqare
+  - no post
+  - Speed bar
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Trail
+    uniqueID: 1769606573
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
