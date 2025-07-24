@@ -44,6 +44,10 @@ public class Shield : MonoBehaviour
 			{
 				player.gameObject.GetComponent<SpriteRenderer>().sprite = player.SIShieldTexture;
 			}
+			if (PlayerPrefs.GetString("Skin") == "hellandback")
+			{
+				player.gameObject.GetComponent<SpriteRenderer>().sprite = player.HellShieldTexture;
+			}
 			player.manager.shieldCollected = true;
 			Object.FindFirstObjectByType<AudioManager>().Play("powerup");
 			Object.Instantiate(shieldCollect, base.transform.position, Quaternion.identity);

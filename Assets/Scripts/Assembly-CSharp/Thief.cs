@@ -21,6 +21,9 @@ public class Thief : MonoBehaviour
 	public int hardMinDamage = 30;
 
 	public int hardMaxDamage = 35;
+	public int unfairMinDamage = 30;
+
+	public int unfairMaxDamage = 35;
 
 	public int minScoreErase;
 

@@ -263,6 +263,8 @@ MonoBehaviour:
   mediumMaxDamage: 25
   hardMinDamage: 30
   hardMaxDamage: 35
+  unfairMinDamage: 40
+  unfairMaxDamage: 50
   minScoreErase: 10
   maxScoreErase: 50
   floatText: {fileID: 1078322615863343, guid: 34234e4819b58994fbe6a693e50e71b3, type: 3}

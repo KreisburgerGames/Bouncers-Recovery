@@ -43,8 +43,10 @@ public class Asteroid : MonoBehaviour
 	private bool hit;
 
 	public float speedAdd = 3f;
+    public int unfairMinDamage;
+    public int unfairMaxDamage;
 
-	private void Awake()
+    private void Awake()
 	{
 		player = Object.FindFirstObjectByType<Player>();
 		manager = player.gameObject.GetComponent<GameManager>();
@@ -143,6 +145,10 @@ public class Asteroid : MonoBehaviour
 			if (PlayerPrefs.GetString("diff") == "Hard")
 			{
 				player.health -= Random.Range(hardMinDamage, hardMaxDamage);
+			}
+			if (PlayerPrefs.GetString("diff") == "Unfair")
+			{
+				player.health -= Random.Range(unfairMinDamage, unfairMaxDamage);
 			}
 			Object.Instantiate(bloodSplash, base.transform.position, Quaternion.identity);
 			Object.FindFirstObjectByType<ScreenShake>().start = true;

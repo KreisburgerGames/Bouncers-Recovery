@@ -45,6 +45,14 @@ public class HealthPack : MonoBehaviour
 				manager.tried = false;
 				Object.Destroy(base.gameObject);
 			}
+			else if (PlayerPrefs.GetString("diff") == "Unfair")
+			{
+				num = Random.Range(player.unfairHealMin, player.unfairHealMax + 1);
+				player.health += num;
+				Object.Instantiate(heal, base.transform.position, Quaternion.identity);
+				manager.tried = false;
+				Object.Destroy(base.gameObject);
+			}
 			else
 			{
 				num = 0;

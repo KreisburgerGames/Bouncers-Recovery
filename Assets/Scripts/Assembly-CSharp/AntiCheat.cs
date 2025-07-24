@@ -3,10 +3,11 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Diagnostics;
+using KS.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Collections;
 using Debug = UnityEngine.Debug;
+using System.Diagnostics;
 
 public class AntiCheat : MonoBehaviour
 {
@@ -32,24 +33,32 @@ public class AntiCheat : MonoBehaviour
     [DllImport("kernel32.dll")]
     private static extern bool IsDebuggerPresent();
 
-    void Start()
+    private void Start()
     {
-        if (ac != null)
-        {
-            Destroy(gameObject);
-        }else
-            ac = this;
+        if (ac != null) Destroy(gameObject);
+        ac = this;
         DontDestroyOnLoad(gameObject);
         StartCoroutine(Watchdog());
         HookAssemblyLoad();
         CheckTimeBomb();
-        CheckHardwareId();
-        CheckDllFolder();
-        CheckRootFolder();
+        SetupDecoyTrap();
+        if (Application.genuineCheckAvailable && !Application.genuine)
+        {
+            Debug.Log("This application has been modified. Access restricted.");
+            Application.Quit();
+        }
+        else
+        {
+            Debug.Log("Application is genuine.");
+        }
+    }
+
+    public void QuickCheck()
+    {
         CheckProcessList();
         CheckForDebugger();
-        CheckIL();
-        SetupDecoyTrap();
+        CheckDllFolder();
+        CheckRootFolder();
     }
 
     private IEnumerator Watchdog()
@@ -60,23 +69,19 @@ public class AntiCheat : MonoBehaviour
             CheckForDebugger();
             CheckDllFolder();
             CheckRootFolder();
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(3f);
         }
     }
 
     void Crash(string reason)
     {
-        Debug.LogError("Anti-Cheat Triggered: " + reason);
-        unsafe
-        {
-            byte* ptr = null;
-            *ptr = 0;
-        }
+        print("ac triggered!");
+        quit.Quit();
     }
 
     void CheckProcessList()
     {
-        foreach (var proc in Process.GetProcesses())
+        foreach (var proc in KS.Diagnostics.Process.GetProcesses())
         {
             string name = proc.ProcessName.ToLower();
             if (BlacklistedProcesses.Any(b => name.Contains(b)))
@@ -91,8 +96,10 @@ public class AntiCheat : MonoBehaviour
         foreach (var file in files)
         {
             string name = Path.GetFileName(file).ToLower();
-            if (SuspiciousDlls.Any(s => name.Contains(s)))
+            if (SuspiciousDlls.Any(s => name.Equals(s) || name.Contains(s + ".dll")))
+            {
                 Crash("Suspicious DLL: " + name);
+            }
         }
     }
 
@@ -127,7 +134,7 @@ public class AntiCheat : MonoBehaviour
         AppDomain.CurrentDomain.AssemblyLoad += (sender, args) =>
         {
             var name = args.LoadedAssembly.FullName.ToLower();
-            if (SuspiciousDlls.Any(s => name.Contains(s)))
+            if (SuspiciousDlls.Any(s => name.Equals(s) || name.Contains(s + ".dll")))
                 Crash("DLL Injection: " + name);
         };
     }

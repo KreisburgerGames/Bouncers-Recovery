@@ -25,8 +25,10 @@ public class Dasher : MonoBehaviour
 	private Vector2 randomPos;
 
 	private Vector2 dasherPos;
+    public int unfairMinDamage = 45;
+    public int unfairMaxDamage = 60;
 
-	private void Awake()
+    private void Awake()
 	{
 		player = Object.FindFirstObjectByType<Player>();
 		rb = GetComponent<Rigidbody2D>();
@@ -78,6 +80,10 @@ public class Dasher : MonoBehaviour
 			if (PlayerPrefs.GetString("diff") == "Hard")
 			{
 				player.health -= Random.Range(hardMinDamage, hardMaxDamage);
+			}
+			if (PlayerPrefs.GetString("diff") == "Unfair")
+			{
+				player.health -= Random.Range(unfairMinDamage, unfairMaxDamage);
 			}
 			Object.Instantiate(bloodSplash, base.transform.position, Quaternion.identity);
 			Object.FindFirstObjectByType<ScreenShake>().start = true;

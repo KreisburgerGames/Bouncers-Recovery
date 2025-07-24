@@ -60,8 +60,9 @@ public class Bouncer : MonoBehaviour
 	public bool menu;
 
 	private bool setPlayer;
+    public float unfairStartSpeed;
 
-	public void Spawned()
+    public void Spawned()
 	{
 		SteamAPI.Init();
 		if (PlayerPrefs.GetInt("rainbowBouncers") == 1)
@@ -82,6 +83,10 @@ public class Bouncer : MonoBehaviour
 		else if (PlayerPrefs.GetString("diff") == "Hard")
 		{
 			startSpeed = hardStartSpeed;
+		}
+		else if (PlayerPrefs.GetString("diff") == "Unfair")
+		{
+			startSpeed = unfairStartSpeed;
 		}
 		else
 		{
@@ -150,6 +155,10 @@ public class Bouncer : MonoBehaviour
 			else if (PlayerPrefs.GetString("diff") == "Hard")
 			{
 				startSpeed = hardStartSpeed;
+			}
+			else if (PlayerPrefs.GetString("diff") == "Unfair")
+			{
+				startSpeed = unfairStartSpeed;
 			}
 			else
 			{
@@ -263,6 +272,10 @@ public class Bouncer : MonoBehaviour
 				{
 					UnityEngine.Object.FindFirstObjectByType<AchivementManager>().GiveAchivement("Impressive");
 				}
+				if (PlayerPrefs.GetString("diff") == "Unfair" && manager.score >= 500)
+				{
+					UnityEngine.Object.FindFirstObjectByType<AchivementManager>().GiveAchivement("hellandback");
+				}
 				if (PlayerPrefs.GetString("diff") == "Easy" && manager.score >= 100)
 				{
 					UnityEngine.Object.FindFirstObjectByType<AchivementManager>().GiveAchivement("FirstSteps");
@@ -356,6 +369,11 @@ public class Bouncer : MonoBehaviour
 				else if (PlayerPrefs.GetString("diff") == "Hard")
 				{
 					num = r.Next(player.hardDamageMin, player.hardDamageMax);
+					player.health -= num;
+				}
+				else if (PlayerPrefs.GetString("diff") == "Unfair")
+				{
+					num = r.Next(player.unfairDamageMin, player.unfairDamageMax);
 					player.health -= num;
 				}
 				else

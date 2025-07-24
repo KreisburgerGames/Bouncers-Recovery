@@ -38,8 +38,10 @@ public class MiniSquare : MonoBehaviour
 	public float cooldownTime = 1f;
 
 	private int date = DateTime.Now.Day;
+    public int unfairMinDamage;
+    public int unfairMaxDamage;
 
-	private void Start()
+    private void Start()
 	{
 		manager = player.gameObject.GetComponent<GameManager>();
 		rb = base.gameObject.GetComponent<Rigidbody2D>();
@@ -59,6 +61,10 @@ public class MiniSquare : MonoBehaviour
 		else if (PlayerPrefs.GetString("diff") == "Hard")
 		{
 			speed = 8f;
+		}
+		else if (PlayerPrefs.GetString("diff") == "Unfair")
+		{
+			speed = 9f;
 		}
 	}
 
@@ -100,6 +106,11 @@ public class MiniSquare : MonoBehaviour
 			else if (PlayerPrefs.GetString("diff") == "Hard")
 			{
 				num = UnityEngine.Random.Range(hardMinDamage, hardMaxDamage + 1);
+				player.health -= num;
+			}
+			else if (PlayerPrefs.GetString("diff") == "Unfair")
+			{
+				num = UnityEngine.Random.Range(unfairMinDamage, unfairMaxDamage + 1);
 				player.health -= num;
 			}
 			else

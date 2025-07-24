@@ -114,6 +114,8 @@ MonoBehaviour:
   bloodSplash: {fileID: 198271285750484595, guid: ac92ff8e632873945bead345357a0d80, type: 3}
   floatText: {fileID: 1078322615863343, guid: 34234e4819b58994fbe6a693e50e71b3, type: 3}
   cooldownTime: 1
+  unfairMinDamage: 60
+  unfairMaxDamage: 80
 --- !u!96 &1137385604347876257
 TrailRenderer:
   serializedVersion: 2

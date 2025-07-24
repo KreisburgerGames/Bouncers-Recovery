@@ -65,8 +65,9 @@ public class RainbowBouncer : MonoBehaviour
 	private int powerupsSpawned;
 
 	public GameObject dieParticle;
+    private float unfairStartSpeed;
 
-	public void Spawned()
+    public void Spawned()
 	{
 		if (PlayerPrefs.GetInt("rainbowBouncers") == 1)
 		{
@@ -86,6 +87,10 @@ public class RainbowBouncer : MonoBehaviour
 		else if (PlayerPrefs.GetString("diff") == "Hard")
 		{
 			startSpeed = hardStartSpeed;
+		}
+		else if (PlayerPrefs.GetString("diff") == "Unfair")
+		{
+			startSpeed = unfairStartSpeed;
 		}
 		else
 		{
@@ -166,6 +171,10 @@ public class RainbowBouncer : MonoBehaviour
 			else if (PlayerPrefs.GetString("diff") == "Hard")
 			{
 				startSpeed = hardStartSpeed;
+			}
+			else if (PlayerPrefs.GetString("diff") == "Hard")
+			{
+				startSpeed = unfairStartSpeed;
 			}
 			else
 			{

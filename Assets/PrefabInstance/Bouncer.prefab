@@ -136,6 +136,7 @@ MonoBehaviour:
   left: 0
   floatText: {fileID: 1078322615863343, guid: 34234e4819b58994fbe6a693e50e71b3, type: 3}
   menu: 0
+  unfairStartSpeed: 40
 --- !u!96 &96784258482056699
 TrailRenderer:
   serializedVersion: 2

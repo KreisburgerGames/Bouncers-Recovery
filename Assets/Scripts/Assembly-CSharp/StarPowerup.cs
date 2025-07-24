@@ -109,6 +109,30 @@ public class StarPowerup : MonoBehaviour
 				player.hardHealMax = 50;
 			}
 		}
+		else if (PlayerPrefs.GetString("diff") == "Unfair")
+		{
+			player.unfairHealMin += UnityEngine.Random.Range(5, 11);
+			player.unfairHealMax += UnityEngine.Random.Range(10, 16);
+			player.unfairDamageMin -= UnityEngine.Random.Range(10, 16);
+			player.unfairDamageMax -= UnityEngine.Random.Range(5, 11);
+			miniSquare.unfairMinDamage -= UnityEngine.Random.Range(10, 16);
+			miniSquare.unfairMaxDamage -= UnityEngine.Random.Range(5, 11);
+			if (player.unfairDamageMin < 5)
+			{
+				player.unfairDamageMin = 5;
+				player.unfairDamageMax = 10;
+			}
+			if (miniSquare.unfairMinDamage < 10)
+			{
+				miniSquare.unfairMinDamage = 10;
+				miniSquare.unfairMaxDamage = 20;
+			}
+			if (player.unfairHealMin > 30)
+			{
+				player.unfairHealMin = 30;
+				player.unfairHealMax = 50;
+			}
+		}
 		if (num != 0)
 		{
 			manager.scoreGoal = manager.score + (int)MathF.Round(manager.score / num);

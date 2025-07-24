@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1751171232023933
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4429688580142146}
   - component: {fileID: 212014439488528331}
@@ -69,7 +69,7 @@ SpriteRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -219,7 +219,6 @@ Rigidbody2D:
   m_Constraints: 0
 --- !u!61 &61143473030726940
 BoxCollider2D:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -241,6 +240,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
+  serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &114101022707839487
@@ -253,9 +253,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a72c03de53158e856e7236c0b4ef54, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  bloodSplash: {fileID: 198271285750484595, guid: ac92ff8e632873945bead345357a0d80, type: 2}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodSplash: {fileID: 198271285750484595, guid: ac92ff8e632873945bead345357a0d80, type: 3}
   easyMinDamage: 15
   easyMaxDamage: 20
   mediumMinDamage: 20
@@ -263,7 +263,9 @@ MonoBehaviour:
   hardMinDamage: 35
   hardMaxDamage: 45
   speed: 1
-  warning: {fileID: 1632485315395565, guid: 4b2f36a150a74fa4fb3e317eb0049d77, type: 2}
+  warning: {fileID: 1632485315395565, guid: 4b2f36a150a74fa4fb3e317eb0049d77, type: 3}
   countodwnTime: 4
   lockDistance: 0.9
   speedAdd: 1
+  unfairMinDamage: 50
+  unfairMaxDamage: 65

@@ -994,7 +994,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &55
 LightmapSettings:
@@ -1452,6 +1451,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1473,6 +1473,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: -1
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -2527,6 +2528,8 @@ MonoBehaviour:
   hardDamageMin: 15
   hardDamageMax: 20
   maxHealth: 100
+  unfairHealMin: 5
+  unfairHealMax: 10
   width: 0
   height: 0
   bloodSplash: {fileID: 198271285750484595, guid: ac92ff8e632873945bead345357a0d80, type: 3}
@@ -2579,6 +2582,13 @@ MonoBehaviour:
   SIMaterial: {fileID: 2100000, guid: 4b528be80830fbd47b9b2714ef3d455e, type: 2}
   SITrailMaterial: {fileID: 2100000, guid: 4b528be80830fbd47b9b2714ef3d455e, type: 2}
   SIShieldTexture: {fileID: 21300000, guid: 8345845085610184fbc56b1daaad5859, type: 2}
+  HellSprite: {fileID: 21300000, guid: 0ca5d921b45715444bdb528e68605ead, type: 3}
+  HellMaterial: {fileID: 2100000, guid: f93a9fd8807526f4a938868c23d364a7, type: 2}
+  HellTrailMaterial: {fileID: 2100000, guid: deabe901b2a72664dbb401b1df1f0bd9, type: 2}
+  HellShieldTexture: {fileID: 21300000, guid: 48d38c542d9c62b48ae31e6bb4842c37, type: 3}
+  unfairDamageMin: 40
+  unfairDamageMax: 75
+  UnfairSpawn: {fileID: 1843253921553272, guid: 4b73d440cb80c054baeb3d8d0a0167c6, type: 3}
 --- !u!114 &123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2613,9 +2623,11 @@ MonoBehaviour:
   easyMinPassiveHealth: 60
   mediumMinPassiveHealth: 50
   hardMinPassiveHealth: 40
+  unfairMinPassiveHealth: 5
   easyPassiveHealMax: 85
   mediumPassiveHealMax: 75
   hardPassiveHealMax: 65
+  unfairPassiveHealthMax: 20
   minPassiveHealAmount: 5
   maxPassiveHealAmount: 10
   multiplierGoal: 20
@@ -2633,9 +2645,12 @@ MonoBehaviour:
   mediumPowerupScoreMax: 100
   hardPowerupScoreMin: 90
   hardPowerupScoreMax: 130
+  unfairPowerupScoreMax: 160
+  unfairPowerupScoreMin: 250
   easyMaxBouncers: 5
   mediumMaxBouncers: 6
   hardMaxBouncers: 7
+  unfairMaxBouncers: 12
   multBounce: 0
   dasher: {fileID: 1216793841505843, guid: ef6550602ae61664f8903bb2670fde6c, type: 3}
   minDasherCooldown: 5
@@ -2658,6 +2673,7 @@ MonoBehaviour:
   easyHealthPackChance: 245
   mediumHealthPackChance: 193
   hardHealthPackChance: 157
+  unfairHealthPackChance: 41
   deathChromaticSpeed: 0.657
   miniSquareBuff: {fileID: 198030892801018851, guid: 79af259ea87784f43be2fa31b052bca0, type: 3}
   maxDiffUp: 3

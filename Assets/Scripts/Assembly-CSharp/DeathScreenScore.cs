@@ -101,6 +101,27 @@ public class DeathScreenScore : MonoBehaviour
 			}
 			highscore.text = "Highscore: " + PlayerPrefs.GetInt("hhighscore");
 		}
+		if (PlayerPrefs.GetString("diff") == "Unfair")
+		{
+			if (PlayerPrefs.HasKey("hhighscore"))
+			{
+				if (score > PlayerPrefs.GetInt("hhighscore"))
+				{
+					PlayerPrefs.SetInt("hhighscore", score);
+					highscore.color = Color.green;
+				}
+				else
+				{
+					highscore.color = Color.white;
+				}
+			}
+			else
+			{
+				PlayerPrefs.SetInt("hhighscore", score);
+				highscore.color = Color.white;
+			}
+			highscore.text = "Highscore: " + PlayerPrefs.GetInt("hhighscore");
+		}
 		if (PlayerPrefs.GetString("diff") == "Easy")
 		{
 			diff.text = "Easy Difficulty";
@@ -115,6 +136,11 @@ public class DeathScreenScore : MonoBehaviour
 		{
 			diff.text = "Hard Difficulty";
 			diff.color = Color.red;
+		}
+		else if (PlayerPrefs.GetString("diff") == "Unfair")
+		{
+			diff.text = "Unfair Difficulty";
+			diff.color = Color.blue;
 		}
 	}
 

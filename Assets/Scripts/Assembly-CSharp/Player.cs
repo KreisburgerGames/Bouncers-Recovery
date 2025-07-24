@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
 	public int hardDamageMax = 35;
 
 	public int maxHealth = 100;
+	public int unfairHealMin, unfairHealMax;
 
 	private bool mouseControls;
 
@@ -160,8 +161,18 @@ public class Player : MonoBehaviour
 	public Material SIMaterial;
 
 	public Material SITrailMaterial;
-
 	public Sprite SIShieldTexture;
+	public Sprite HellSprite;
+
+	public Material HellMaterial;
+
+	public Material HellTrailMaterial;
+
+	public Sprite HellShieldTexture;
+    public int unfairDamageMin;
+    public int unfairDamageMax;
+
+	public GameObject UnfairSpawn;
 
 	public void ShieldBreak()
 	{
@@ -192,6 +203,10 @@ public class Player : MonoBehaviour
 		else if (PlayerPrefs.GetString("Skin") == "SkillIssue")
 		{
 			base.gameObject.GetComponent<SpriteRenderer>().sprite = SISprite;
+		}
+		else if (PlayerPrefs.GetString("Skin") == "hellandback")
+		{
+			base.gameObject.GetComponent<SpriteRenderer>().sprite = HellSprite;
 		}
 	}
 
@@ -248,6 +263,12 @@ public class Player : MonoBehaviour
 			GetComponent<SpriteRenderer>().material = SIMaterial;
 			GetComponent<TrailRenderer>().material = SITrailMaterial;
 		}
+		else if (PlayerPrefs.GetString("Skin") == "hellandback")
+		{
+			base.gameObject.GetComponent<SpriteRenderer>().sprite = HellSprite;
+			GetComponent<SpriteRenderer>().material = HellMaterial;
+			GetComponent<TrailRenderer>().material = HellTrailMaterial;
+		}
 		pushingx = false;
 		pushingy = false;
 		canMove = false;
@@ -272,6 +293,10 @@ public class Player : MonoBehaviour
 			else if (PlayerPrefs.GetString("diff") == "Hard")
 			{
 				Object.Instantiate(HardSpawn, base.transform.position, Quaternion.identity);
+			}
+			else if (PlayerPrefs.GetString("diff") == "Unfair")
+			{
+				Object.Instantiate(UnfairSpawn, base.transform.position, Quaternion.identity);
 			}
 		}
 	}
@@ -398,7 +423,7 @@ public class Player : MonoBehaviour
 	{
 		if (!pushingx && !pushingy && !mouseControls && canMove)
 		{
-			rb.velocity = new Vector2(dirx * speed * 0.7f, diry * speed * 0.7f);
+			rb.velocity = new Vector2(dirx * speed * 0.8f, diry * speed * 0.8f);
 		}
 		else if (!pushingx && !pushingy && canMove)
 		{

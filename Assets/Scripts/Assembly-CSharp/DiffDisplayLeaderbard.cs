@@ -22,6 +22,11 @@ public class DiffDisplayLeaderbard : MonoBehaviour
 			text.text = "Hard Difficulty Leaderboard";
 			text.color = Color.red;
 		}
+		else if (PlayerPrefs.GetString("diff") == "Unfair")
+		{
+			text.text = "Unfair Difficulty Leaderboard";
+			text.color = Color.blue;
+		}
 		Object.FindFirstObjectByType<HighScores>().DownloadScores();
 		Object.FindFirstObjectByType<DisplayHighscores>().SetScoresToMenu(Object.FindFirstObjectByType<HighScores>().scoreList);
 	}

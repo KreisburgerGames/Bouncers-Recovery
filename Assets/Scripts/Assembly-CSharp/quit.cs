@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class quit : MonoBehaviour
 {
-	public void Quit()
+	public static void Quit()
 	{
 		Application.Quit();
 	}

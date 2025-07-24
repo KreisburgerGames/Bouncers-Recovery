@@ -1,14 +1,39 @@
 using System;
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Security.Cryptography;
+using System.IO;
+using System.Text;
+
 
 public class MainMenu : MonoBehaviour
 {
 	public GameObject[] keepOnSettingsLoad;
+	
 
 	private bool started;
 	public AudioMixer mixer;
 	private float value;
+
+    public static string Decrypt(string cipherText, string password, string salt)
+    {
+        using (Aes aes = Aes.Create())
+        {
+            byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
+            var key = new Rfc2898DeriveBytes(password, saltBytes, 10000);
+            aes.Key = key.GetBytes(32);
+            aes.IV = key.GetBytes(16);
+
+            byte[] buffer = Convert.FromBase64String(cipherText);
+
+            var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+            using (var ms = new MemoryStream(buffer))
+            using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+            using (var sr = new StreamReader(cs)) {
+                return sr.ReadToEnd();
+            }
+        }
+    }
 
 	private void Awake()
 	{

@@ -64,12 +64,14 @@ public class GameManager : MonoBehaviour
 	public int mediumMinPassiveHealth = 45;
 
 	public int hardMinPassiveHealth = 20;
+	public int unfairMinPassiveHealth = 5;
 
 	public int easyPassiveHealMax = 85;
 
 	public int mediumPassiveHealMax = 65;
 
 	public int hardPassiveHealMax = 45;
+	public int unfairPassiveHealthMax = 20;
 
 	public int minPassiveHealAmount = 5;
 
@@ -117,6 +119,7 @@ public class GameManager : MonoBehaviour
 	public int hardPowerupScoreMin;
 
 	public int hardPowerupScoreMax;
+	public int unfairPowerupScoreMax, unfairPowerupScoreMin;
 
 	private int easyScoreGoal;
 
@@ -125,10 +128,12 @@ public class GameManager : MonoBehaviour
 	public int mediumMaxBouncers = 7;
 
 	public int hardMaxBouncers = 9;
+	public int unfairMaxBouncers = 12;
 
 	private int mediumScoreGoal;
 
 	private int hardScoreGoal;
+	private int unfairScoreGoal;
 
 	private int plusLivesSpawned;
 
@@ -194,6 +199,8 @@ public class GameManager : MonoBehaviour
 
 	[Range(0f, 1000f)]
 	public int hardHealthPackChance;
+	[Range(0f, 1000f)]
+	public int unfairHealthPackChance;
 
 	[Range(0f, 1f)]
 	public float deathChromaticSpeed;
@@ -259,8 +266,10 @@ public class GameManager : MonoBehaviour
 
 	[HideInInspector]
 	public bool purgeCollected;
+    private int unfairHealthMin;
+    private int unfairPassiveHealMax;
 
-	private void Start()
+    private void Start()
 	{
 		SteamAPI.Init();
 		score = 0;
@@ -311,6 +320,11 @@ public class GameManager : MonoBehaviour
 		{
 			scoreGoalMultiplier = 4.5f;
 			hardScoreGoal = UnityEngine.Random.Range(hardPowerupScoreMin, hardPowerupScoreMax + 1);
+		}
+		else if (PlayerPrefs.GetString("diff") == "Unfair")
+		{
+			scoreGoalMultiplier = 5f;
+			unfairScoreGoal = UnityEngine.Random.Range(unfairPowerupScoreMin, unfairPowerupScoreMax + 1);
 		}
 		played = false;
 	}
@@ -462,6 +476,18 @@ public class GameManager : MonoBehaviour
 				UnityEngine.Object.Instantiate(rainbowBouncer, position3, Quaternion.identity);
 			}
 		}
+		else if (PlayerPrefs.GetString("diff") == "Unfair" && bouncers < score / 1000 && score / 10 < unfairMaxBouncers)
+		{
+			print("spawn");
+			Vector3 position3 = new Vector3(UnityEngine.Random.Range((width - spawnPadding) * -1f, width - spawnPadding), UnityEngine.Random.Range((height - spawnPadding) * -1f, height - spawnPadding), base.transform.position.z);
+			UnityEngine.Object.Instantiate(this.bouncer, position3, Quaternion.identity).Spawned();
+			UnityEngine.Object.Instantiate(bouncerSpawn, position3, Quaternion.identity);
+			bouncers++;
+			if (UnityEngine.Random.Range(1, 26) == 5)
+			{
+				UnityEngine.Object.Instantiate(rainbowBouncer, position3, Quaternion.identity);
+			}
+		}
 		if (PlayerPrefs.GetString("diff") == "Easy" && !isCountdown)
 		{
 			Bouncer[] array = UnityEngine.Object.FindObjectsOfType<Bouncer>();
@@ -525,6 +551,28 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
+		else if (PlayerPrefs.GetString("diff") == "Unfair" && !isCountdown && score > 100 && bouncers < unfairMaxBouncers)
+		{
+			Bouncer[] array4 = UnityEngine.Object.FindObjectsOfType<Bouncer>();
+			float num3 = 0f;
+			Bouncer[] array2 = array4;
+			foreach (Bouncer bouncer3 in array2)
+			{
+				num3 += MathF.Abs(bouncer3.GetComponent<Rigidbody2D>().velocity.x) + MathF.Abs(bouncer3.GetComponent<Rigidbody2D>().velocity.y);
+			}
+			if (num3 / ((float)array4.Length/3) < this.bouncer.unfairStartSpeed - 1f)
+			{
+				Vector3 position6 = new Vector3(UnityEngine.Random.Range((width - spawnPadding) * -1f, width - spawnPadding), UnityEngine.Random.Range((height - spawnPadding) * -1f, height - spawnPadding), base.transform.position.z);
+				UnityEngine.Object.Instantiate(this.bouncer, position6, Quaternion.identity).Spawned();
+				UnityEngine.Object.Instantiate(bouncerSpawn, position6, Quaternion.identity);
+				print("other");
+				bouncers++;
+				if (UnityEngine.Random.Range(1, 26) == 5)
+				{
+					UnityEngine.Object.Instantiate(rainbowBouncer, position6, Quaternion.identity);
+				}
+			}
+		}
 		if ((float)score >= scoreGoal)
 		{
 			if (PlayerPrefs.GetString("diff") == "Easy" && bouncers < easyMaxBouncers)
@@ -568,6 +616,20 @@ public class GameManager : MonoBehaviour
 				scoreGoal *= scoreGoalMultiplier;
 				scoreGoal += UnityEngine.Random.Range(MathF.Round(-score / 3), MathF.Round(score / 3) + 1f);
 				if (UnityEngine.Random.Range(1, 7) == 3)
+				{
+					tried = false;
+					cooldown = 0f;
+				}
+			}
+			if (PlayerPrefs.GetString("diff") == "Unfair" && bouncers < unfairMaxBouncers)
+			{
+				Vector3 position9 = new Vector3(UnityEngine.Random.Range((width - spawnPadding) * -1f, width - spawnPadding), UnityEngine.Random.Range((height - spawnPadding) * -1f, height - spawnPadding), base.transform.position.z);
+				UnityEngine.Object.Instantiate(this.bouncer, position9, Quaternion.identity).Spawned();
+				UnityEngine.Object.Instantiate(bouncerSpawn, position9, Quaternion.identity);
+				bouncers++;
+				scoreGoal *= scoreGoalMultiplier;
+				scoreGoal += UnityEngine.Random.Range(MathF.Round(-score / 5), MathF.Round(score / 2) + 1f);
+				if (UnityEngine.Random.Range(1, 10) == 3)
 				{
 					tried = false;
 					cooldown = 0f;
@@ -619,7 +681,7 @@ public class GameManager : MonoBehaviour
 				UnityEngine.Object.FindFirstObjectByType<AudioManager>().Play("death");
 				Array.Find(UnityEngine.Object.FindFirstObjectByType<AudioManager>().sounds, (Sound x) => x.name == "main theme").audioSource.Stop();
 				UnityEngine.Object.FindFirstObjectByType<AchivementManager>().GiveAchivement("Ouch");
-				if (timeSurvived <= 5f)
+				if (timeSurvived <= 5f && PlayerPrefs.GetString("diff") == "Easy")
 				{
 					UnityEngine.Object.FindFirstObjectByType<AchivementManager>().GiveAchivement("SkillIssue");
 				}
@@ -814,7 +876,7 @@ public class GameManager : MonoBehaviour
 				if (num3 == 1 && plusLivesSpawned < 2 && UnityEngine.Object.FindFirstObjectByType<Purge>() == null && UnityEngine.Object.FindFirstObjectByType<SmallPowerup>() == null && UnityEngine.Object.FindFirstObjectByType<Shield>() == null && UnityEngine.Object.FindFirstObjectByType<LifePowerup>() == null && UnityEngine.Object.FindFirstObjectByType<StarPowerup>() == null)
 				{
 					UnityEngine.Object.Instantiate(plusOneLife, new Vector2(UnityEngine.Random.Range(0f - width, width), UnityEngine.Random.Range(0f - height, height)), Quaternion.identity);
-					hardScoreGoal = UnityEngine.Random.Range(easyPowerupScoreMin, easyPowerupScoreMax + 1);
+					hardScoreGoal = UnityEngine.Random.Range(hardPowerupScoreMin, hardPowerupScoreMax + 1);
 					hardScoreGoal = score + UnityEngine.Random.Range((int)MathF.Round(hardScoreGoal / 2), (int)MathF.Round(hardScoreGoal * 2));
 					hardScoreGoal += UnityEngine.Random.Range((int)Mathf.Round(score / 4), (int)Mathf.Round(score / 4));
 					plusLivesSpawned++;
@@ -855,6 +917,73 @@ public class GameManager : MonoBehaviour
 				{
 					UnityEngine.Object.Instantiate(purge, new Vector2(UnityEngine.Random.Range(0f - width + 1f, width - 1f), UnityEngine.Random.Range(0f - height + 1f, height - 1f)), Quaternion.identity);
 					hardScoreGoal = UnityEngine.Random.Range(hardPowerupScoreMin, hardPowerupScoreMax);
+					mediumScoreGoal = score + UnityEngine.Random.Range((int)MathF.Round(mediumScoreGoal / 2), (int)MathF.Round(mediumScoreGoal * 2));
+					mediumScoreGoal += UnityEngine.Random.Range((int)Mathf.Round(score / 4), (int)Mathf.Round(score / 4));
+					purgesSpawned++;
+				}
+			}
+		}
+		if (PlayerPrefs.GetString("diff") == "Unfair")
+		{
+			if (player.health < unfairHealthMin)
+			{
+				if (UnityEngine.Random.Range(1, 1001) <= unfairHealthPackChance && !tried && UnityEngine.Object.FindFirstObjectByType<HealthPack>() == null && !healing)
+				{
+					UnityEngine.Object.Instantiate(position: new Vector3(UnityEngine.Random.Range(0f - width + 1f, width - 1f), UnityEngine.Random.Range(0f - height + 1f, height - 1f), 0f), original: healthPack, rotation: Quaternion.identity);
+				}
+				else if (player.health < unfairMinPassiveHealth && UnityEngine.Random.Range(1, 201) <= 5)
+				{
+					healing = true;
+				}
+				tried = true;
+			}
+			if (score >= unfairScoreGoal)
+			{
+				int num3 = UnityEngine.Random.Range(1, 7);
+				if (num3 == 1 && plusLivesSpawned < 2 && UnityEngine.Object.FindFirstObjectByType<Purge>() == null && UnityEngine.Object.FindFirstObjectByType<SmallPowerup>() == null && UnityEngine.Object.FindFirstObjectByType<Shield>() == null && UnityEngine.Object.FindFirstObjectByType<LifePowerup>() == null && UnityEngine.Object.FindFirstObjectByType<StarPowerup>() == null)
+				{
+					UnityEngine.Object.Instantiate(plusOneLife, new Vector2(UnityEngine.Random.Range(0f - width, width), UnityEngine.Random.Range(0f - height, height)), Quaternion.identity);
+					unfairScoreGoal = UnityEngine.Random.Range(unfairPowerupScoreMin, unfairPowerupScoreMax + 1);
+					unfairScoreGoal = score + UnityEngine.Random.Range((int)MathF.Round(unfairScoreGoal / 2), (int)MathF.Round(unfairScoreGoal * 2));
+					unfairScoreGoal += UnityEngine.Random.Range((int)Mathf.Round(score / 4), (int)Mathf.Round(score / 4));
+					plusLivesSpawned++;
+				}
+				else if (num3 == 2 && starsSpawned < 2 && UnityEngine.Object.FindFirstObjectByType<Purge>() == null && UnityEngine.Object.FindFirstObjectByType<SmallPowerup>() == null && UnityEngine.Object.FindFirstObjectByType<Shield>() == null && UnityEngine.Object.FindFirstObjectByType<LifePowerup>() == null && UnityEngine.Object.FindFirstObjectByType<StarPowerup>() == null)
+				{
+					UnityEngine.Object.Instantiate(star, new Vector2(UnityEngine.Random.Range(0f - width, width), UnityEngine.Random.Range(0f - height, height)), Quaternion.identity);
+					unfairScoreGoal = UnityEngine.Random.Range(unfairPowerupScoreMin, unfairPowerupScoreMax + 1);
+					unfairScoreGoal = score + UnityEngine.Random.Range((int)MathF.Round(unfairScoreGoal / 2), (int)MathF.Round(unfairScoreGoal * 2));
+					unfairScoreGoal += UnityEngine.Random.Range((int)Mathf.Round(score / 4), (int)Mathf.Round(score / 4));
+					starsSpawned++;
+				}
+				else if (num3 == 3 && speedsSpawned < 2 && UnityEngine.Object.FindFirstObjectByType<Purge>() == null && UnityEngine.Object.FindFirstObjectByType<SmallPowerup>() == null && UnityEngine.Object.FindFirstObjectByType<Shield>() == null && UnityEngine.Object.FindFirstObjectByType<LifePowerup>() == null && UnityEngine.Object.FindFirstObjectByType<StarPowerup>() == null && UnityEngine.Object.FindFirstObjectByType<SpeedPowerup>() == null)
+				{
+					UnityEngine.Object.Instantiate(speed, new Vector2(UnityEngine.Random.Range(0f - width + 1f, width - 1f), UnityEngine.Random.Range(0f - height + 1f, height - 1f)), Quaternion.identity);
+					unfairScoreGoal = UnityEngine.Random.Range(unfairPowerupScoreMin, unfairPowerupScoreMax);
+					unfairScoreGoal = score + UnityEngine.Random.Range((int)MathF.Round(unfairScoreGoal / 2), (int)MathF.Round(unfairScoreGoal * 2));
+					unfairScoreGoal += UnityEngine.Random.Range((int)Mathf.Round(score / 4), (int)Mathf.Round(score / 4));
+					speedsSpawned++;
+				}
+				else if (num3 == 4 && shieldsSpawned < 5 && UnityEngine.Object.FindFirstObjectByType<Purge>() == null && UnityEngine.Object.FindFirstObjectByType<SmallPowerup>() == null && UnityEngine.Object.FindFirstObjectByType<Shield>() == null && UnityEngine.Object.FindFirstObjectByType<LifePowerup>() == null && UnityEngine.Object.FindFirstObjectByType<StarPowerup>() == null && UnityEngine.Object.FindFirstObjectByType<SpeedPowerup>() == null)
+				{
+					UnityEngine.Object.Instantiate(shield, new Vector2(UnityEngine.Random.Range(0f - width + 1f, width - 1f), UnityEngine.Random.Range(0f - height + 1f, height - 1f)), Quaternion.identity);
+					unfairScoreGoal = UnityEngine.Random.Range(unfairPowerupScoreMin, unfairPowerupScoreMax);
+					unfairScoreGoal = score + UnityEngine.Random.Range((int)MathF.Round(unfairScoreGoal / 2), (int)MathF.Round(unfairScoreGoal * 2));
+					unfairScoreGoal += UnityEngine.Random.Range((int)Mathf.Round(score / 4), (int)Mathf.Round(score / 4));
+					speedsSpawned++;
+				}
+				else if (num3 == 5 && smallsSpawned < 1 && UnityEngine.Object.FindFirstObjectByType<Purge>() == null && UnityEngine.Object.FindFirstObjectByType<SmallPowerup>() == null && UnityEngine.Object.FindFirstObjectByType<Shield>() == null && UnityEngine.Object.FindFirstObjectByType<LifePowerup>() == null && UnityEngine.Object.FindFirstObjectByType<StarPowerup>() == null && UnityEngine.Object.FindFirstObjectByType<SpeedPowerup>() == null)
+				{
+					UnityEngine.Object.Instantiate(small, new Vector2(UnityEngine.Random.Range(0f - width + 1f, width - 1f), UnityEngine.Random.Range(0f - height + 1f, height - 1f)), Quaternion.identity);
+					unfairScoreGoal = UnityEngine.Random.Range(unfairPowerupScoreMin, unfairPowerupScoreMax);
+					unfairScoreGoal = score + UnityEngine.Random.Range((int)MathF.Round(unfairScoreGoal / 2), (int)MathF.Round(unfairScoreGoal * 2));
+					unfairScoreGoal += UnityEngine.Random.Range((int)Mathf.Round(score / 4), (int)Mathf.Round(score / 4));
+					smallsSpawned++;
+				}
+				else if (num3 == 6 && purgesSpawned < 3 && UnityEngine.Object.FindFirstObjectByType<Purge>() == null && UnityEngine.Object.FindFirstObjectByType<SmallPowerup>() == null && UnityEngine.Object.FindFirstObjectByType<Shield>() == null && UnityEngine.Object.FindFirstObjectByType<LifePowerup>() == null && UnityEngine.Object.FindFirstObjectByType<StarPowerup>() == null && UnityEngine.Object.FindFirstObjectByType<SpeedPowerup>() == null)
+				{
+					UnityEngine.Object.Instantiate(purge, new Vector2(UnityEngine.Random.Range(0f - width + 1f, width - 1f), UnityEngine.Random.Range(0f - height + 1f, height - 1f)), Quaternion.identity);
+					unfairScoreGoal = UnityEngine.Random.Range(unfairPowerupScoreMin, unfairPowerupScoreMax);
 					mediumScoreGoal = score + UnityEngine.Random.Range((int)MathF.Round(mediumScoreGoal / 2), (int)MathF.Round(mediumScoreGoal * 2));
 					mediumScoreGoal += UnityEngine.Random.Range((int)Mathf.Round(score / 4), (int)Mathf.Round(score / 4));
 					purgesSpawned++;
@@ -918,6 +1047,17 @@ public class GameManager : MonoBehaviour
 						if (player.health >= hardPassiveHealMax)
 						{
 							player.health = hardPassiveHealMax;
+							healing = false;
+						}
+					}
+					if (PlayerPrefs.GetString("diff") == "Unfair" && UnityEngine.Object.FindFirstObjectByType<HealthPack>() == null)
+					{
+						int num6 = UnityEngine.Random.Range(minPassiveHealAmount, maxPassiveHealAmount + 1);
+						player.health += num6;
+						UnityEngine.Object.Instantiate(player.floatText.GetComponent<FloatText>(), base.transform.position, Quaternion.identity).Spawn("+" + num6, Color.green, null, null, 2f, 4f);
+						if (player.health >= unfairPassiveHealMax)
+						{
+							player.health = unfairPassiveHealMax;
 							healing = false;
 						}
 					}
