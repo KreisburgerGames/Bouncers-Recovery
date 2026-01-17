@@ -27,6 +27,7 @@ public class ResetAchievements : MonoBehaviour
 		SteamUserStats.ResetAllStats(bAchievementsToo: true);
 		SteamUserStats.StoreStats();
 		confirm.SetActive(value: false);
+		PlayerPrefs.SetString("Skin", "Default");
 		originalButton.gameObject.SetActive(value: false);
 		Application.Quit();
 	}

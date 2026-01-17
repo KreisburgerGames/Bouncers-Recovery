@@ -12,6 +12,7 @@ public class VignetteHandlerDiff : MonoBehaviour
 	public float grainChangeSpeed = 5f;
 	public float unfairGrainValue = 10f;
 	private bool isGrain;
+	public float defaultGrain;
 	public float volChangeSpeed;
 	public AudioSource staticSound;
 
@@ -57,7 +58,7 @@ public class VignetteHandlerDiff : MonoBehaviour
 		}
 		else
 		{
-			grain.intensity.Override(Mathf.Lerp(grain.intensity.value, 0f, grainChangeSpeed * 10 * Time.deltaTime));
+			grain.intensity.Override(Mathf.Lerp(grain.intensity.value, defaultGrain, grainChangeSpeed * 10 * Time.deltaTime));
 			staticSound.volume = Mathf.Lerp(staticSound.volume, 0, volChangeSpeed * 10 * Time.deltaTime);
 		}
 		if (Input.GetKeyUp(KeyCode.G) || Input.GetKeyUp(KeyCode.L))

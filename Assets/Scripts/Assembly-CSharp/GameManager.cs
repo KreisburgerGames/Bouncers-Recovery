@@ -123,12 +123,12 @@ public class GameManager : MonoBehaviour
 
 	private int easyScoreGoal;
 
-	public int easyMaxBouncers = 5;
+	public int easyMaxBouncers = 7;
 
-	public int mediumMaxBouncers = 7;
+	public int mediumMaxBouncers = 8;
 
-	public int hardMaxBouncers = 9;
-	public int unfairMaxBouncers = 12;
+	public int hardMaxBouncers = 10;
+	public int unfairMaxBouncers = 13;
 
 	private int mediumScoreGoal;
 
@@ -443,7 +443,7 @@ public class GameManager : MonoBehaviour
 			minDasherCooldown = Mathf.Clamp(minDasherCooldown, 1f, 10f);
 			maxDasherCooldown = Mathf.Clamp(maxDasherCooldown, 3f, 15f);
 		}
-		if (PlayerPrefs.GetString("diff") == "Easy" && bouncers < score / 100 && score / 100 < easyMaxBouncers)
+		if (PlayerPrefs.GetString("diff") == "Easy" && bouncers < score / 50 && score / 150 < easyMaxBouncers && bouncers < easyMaxBouncers)
 		{
 			Vector3 position = new Vector3(UnityEngine.Random.Range((width - spawnPadding) * -1f, width - spawnPadding), UnityEngine.Random.Range((height - spawnPadding) * -1f, height - spawnPadding), base.transform.position.z);
 			UnityEngine.Object.Instantiate(this.bouncer, position, Quaternion.identity).Spawned();
@@ -454,7 +454,7 @@ public class GameManager : MonoBehaviour
 				UnityEngine.Object.Instantiate(rainbowBouncer, position, Quaternion.identity);
 			}
 		}
-		else if (PlayerPrefs.GetString("diff") == "Medium" && bouncers < score / 100 && score / 100 < mediumMaxBouncers)
+		else if (PlayerPrefs.GetString("diff") == "Medium" && bouncers < score / 80 && score / 80 < mediumMaxBouncers && bouncers < mediumMaxBouncers)
 		{
 			Vector3 position2 = new Vector3(UnityEngine.Random.Range((width - spawnPadding) * -1f, width - spawnPadding), UnityEngine.Random.Range((height - spawnPadding) * -1f, height - spawnPadding), base.transform.position.z);
 			UnityEngine.Object.Instantiate(this.bouncer, position2, Quaternion.identity).Spawned();
@@ -465,7 +465,7 @@ public class GameManager : MonoBehaviour
 				UnityEngine.Object.Instantiate(rainbowBouncer, position2, Quaternion.identity);
 			}
 		}
-		else if (PlayerPrefs.GetString("diff") == "Hard" && bouncers < score / 100 && score / 100 < hardMaxBouncers)
+		else if (PlayerPrefs.GetString("diff") == "Hard" && bouncers < score / 100 && score / 100 < hardMaxBouncers && bouncers < hardMaxBouncers)
 		{
 			Vector3 position3 = new Vector3(UnityEngine.Random.Range((width - spawnPadding) * -1f, width - spawnPadding), UnityEngine.Random.Range((height - spawnPadding) * -1f, height - spawnPadding), base.transform.position.z);
 			UnityEngine.Object.Instantiate(this.bouncer, position3, Quaternion.identity).Spawned();
@@ -476,7 +476,7 @@ public class GameManager : MonoBehaviour
 				UnityEngine.Object.Instantiate(rainbowBouncer, position3, Quaternion.identity);
 			}
 		}
-		else if (PlayerPrefs.GetString("diff") == "Unfair" && bouncers < score / 1000 && score / 10 < unfairMaxBouncers)
+		else if (PlayerPrefs.GetString("diff") == "Unfair" && bouncers < score / 1000 && score / 10 < unfairMaxBouncers && bouncers < unfairMaxBouncers)
 		{
 			print("spawn");
 			Vector3 position3 = new Vector3(UnityEngine.Random.Range((width - spawnPadding) * -1f, width - spawnPadding), UnityEngine.Random.Range((height - spawnPadding) * -1f, height - spawnPadding), base.transform.position.z);
@@ -488,7 +488,7 @@ public class GameManager : MonoBehaviour
 				UnityEngine.Object.Instantiate(rainbowBouncer, position3, Quaternion.identity);
 			}
 		}
-		if (PlayerPrefs.GetString("diff") == "Easy" && !isCountdown)
+		if (PlayerPrefs.GetString("diff") == "Easy" && !isCountdown && bouncers < easyMaxBouncers)
 		{
 			Bouncer[] array = UnityEngine.Object.FindObjectsOfType<Bouncer>();
 			float num = 0f;
@@ -509,7 +509,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
-		else if (PlayerPrefs.GetString("diff") == "Medium" && !isCountdown && score > 100)
+		else if (PlayerPrefs.GetString("diff") == "Medium" && !isCountdown && score > 100 && bouncers < mediumMaxBouncers)
 		{
 			Bouncer[] array3 = UnityEngine.Object.FindObjectsOfType<Bouncer>();
 			float num2 = 0f;
@@ -530,7 +530,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
-		else if (PlayerPrefs.GetString("diff") == "Hard" && !isCountdown && score > 100)
+		else if (PlayerPrefs.GetString("diff") == "Hard" && !isCountdown && score > 100 && bouncers < hardMaxBouncers)
 		{
 			Bouncer[] array4 = UnityEngine.Object.FindObjectsOfType<Bouncer>();
 			float num3 = 0f;

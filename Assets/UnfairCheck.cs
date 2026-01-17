@@ -32,9 +32,9 @@ public class UnfairCheck : MonoBehaviour
                 break;
             }
         }
-        if (!ready)
+        if (ready)
         {
-            btn.SetActive(false);
+            btn.SetActive(true);
         }
     }
 }

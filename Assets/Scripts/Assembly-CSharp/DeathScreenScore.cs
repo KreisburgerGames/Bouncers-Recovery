@@ -1,4 +1,5 @@
 using Steamworks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +7,7 @@ public class DeathScreenScore : MonoBehaviour
 {
 	private int score;
 
-	public Text text;
+	public TMP_Text text;
 
 	public Text diff;
 
@@ -18,7 +19,7 @@ public class DeathScreenScore : MonoBehaviour
 
 	public Camera camera;
 
-	public Text highscore;
+	public TMP_Text highscore;
 
 	private bool started;
 
@@ -103,11 +104,11 @@ public class DeathScreenScore : MonoBehaviour
 		}
 		if (PlayerPrefs.GetString("diff") == "Unfair")
 		{
-			if (PlayerPrefs.HasKey("hhighscore"))
+			if (PlayerPrefs.HasKey("uhighscore"))
 			{
-				if (score > PlayerPrefs.GetInt("hhighscore"))
+				if (score > PlayerPrefs.GetInt("uhighscore"))
 				{
-					PlayerPrefs.SetInt("hhighscore", score);
+					PlayerPrefs.SetInt("uhighscore", score);
 					highscore.color = Color.green;
 				}
 				else
@@ -117,10 +118,10 @@ public class DeathScreenScore : MonoBehaviour
 			}
 			else
 			{
-				PlayerPrefs.SetInt("hhighscore", score);
+				PlayerPrefs.SetInt("uhighscore", score);
 				highscore.color = Color.white;
 			}
-			highscore.text = "Highscore: " + PlayerPrefs.GetInt("hhighscore");
+			highscore.text = "Highscore: " + PlayerPrefs.GetInt("uhighscore");
 		}
 		if (PlayerPrefs.GetString("diff") == "Easy")
 		{

@@ -40,7 +40,7 @@ public class AntiCheat : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         StartCoroutine(Watchdog());
         HookAssemblyLoad();
-        CheckTimeBomb();
+        //CheckTimeBomb();
         SetupDecoyTrap();
         if (Application.genuineCheckAvailable && !Application.genuine)
         {
