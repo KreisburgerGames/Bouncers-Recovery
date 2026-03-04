@@ -20,12 +20,26 @@ public class SlowDown : MonoBehaviour
 	[HideInInspector]
 	public bool speedUp;
 
-	private void Awake()
-	{
-	}
+	public float cutoffNormal = 22000f;
+	public float cutoffSlow = 1500f;
+	public float cutoffSpeed = 50f;
+	private AudioLowPassFilter lowPass;
 
-	private void Update()
+    void Start()
+    {
+        lowPass = Camera.main.GetComponent<AudioLowPassFilter>();
+    }
+
+    private void Update()
 	{
+		if(Time.timeScale < 1f)
+		{
+			lowPass.cutoffFrequency = Mathf.Lerp(lowPass.cutoffFrequency, cutoffSlow, Time.deltaTime * cutoffSpeed);
+		}
+		else
+		{
+			lowPass.cutoffFrequency = Mathf.Lerp(lowPass.cutoffFrequency, cutoffNormal, Time.deltaTime * cutoffSpeed);
+		}
 		if (slowDown && Object.FindFirstObjectByType<GameManager>().countdownTime <= 0f)
 		{
 			if (!Object.FindFirstObjectByType<PauseMenu>().paused)
