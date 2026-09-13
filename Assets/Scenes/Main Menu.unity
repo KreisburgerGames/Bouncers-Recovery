@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 60}
   - component: {fileID: 657309219}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: CC Liscense
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 64}
   - component: {fileID: 106000101}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: shameless plug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3646,7 +3646,7 @@ GameObject:
   - component: {fileID: 764651528}
   - component: {fileID: 764651527}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: Version
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3692,9 +3692,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'v1.2.14
-
-'
+  m_text: v1.2.16
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5f7512ea08ac7cf44b88783f4be5229c, type: 2}
   m_sharedMaterial: {fileID: 6610091024842019846, guid: 5f7512ea08ac7cf44b88783f4be5229c, type: 2}

@@ -68,7 +68,7 @@ public class MainMenu : MonoBehaviour
 		}
 		if (!PlayerPrefs.HasKey("shakeMultiplier"))
 		{
-			PlayerPrefs.SetFloat("shakeMultiplier", 1f);
+			PlayerPrefs.SetFloat("shakeMultiplier", 0.5f);
 		}
 		if (!PlayerPrefs.HasKey("Skin"))
 		{

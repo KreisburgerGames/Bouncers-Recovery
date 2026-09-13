@@ -2567,7 +2567,7 @@ MonoBehaviour:
   HardSpawn: {fileID: 198908859824187483, guid: 76030836f51363b48855889b89c65cab, type: 3}
   canMove: 1
   friction: 1.5
-  force: 30
+  force: 20
   easyHealMin: 15
   easyHealMax: 25
   mediumHealMin: 10

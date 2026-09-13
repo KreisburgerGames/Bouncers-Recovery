@@ -59,7 +59,9 @@ public class SettingsMenu : MonoBehaviour
 			PlayerPrefs.SetFloat("MasterVol", -5f);
 			volumeSlider.value = 1;
 		}
-		shakeMultiplier.value = PlayerPrefs.GetFloat("shakeMultiplier");
+		if(PlayerPrefs.HasKey("shakeMultiplier"))
+			shakeMultiplier.value = PlayerPrefs.GetFloat("shakeMultiplier");
+		else shakeMultiplier.value = 0.5f;
 		multText.text = (MathF.Round(shakeMultiplier.value, 2) + 0.5f).ToString();
 		if (PlayerPrefs.HasKey("mouseControls"))
 		{
