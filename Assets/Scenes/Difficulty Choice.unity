@@ -998,6 +998,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c921103943faf9096743cd5ec815959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diffSelectStatuses:
+  - Choosing difficulty
+  - Selecting resistance
+  - Considering toughness
 --- !u!114 &51
 MonoBehaviour:
   m_ObjectHideFlags: 0

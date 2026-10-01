@@ -2724,6 +2724,22 @@ MonoBehaviour:
   starCollected: 0
   plusLifeCollected: 0
   purgeCollected: 0
+  statusSuffixes:
+  - ballin
+  - struggling
+  - chilling
+  - dying
+  - bouncing
+  - moving
+  - locked in
+  - banging their head against the keyboard
+  - trying to understand the meaning of life
+  - writing a negative review for this game
+  - not paying attention in class
+  unfairStatuses:
+  - Going through hell
+  - Taking the path of most resistance
+  - Regretting some decisions
 --- !u!114 &126
 MonoBehaviour:
   m_ObjectHideFlags: 0

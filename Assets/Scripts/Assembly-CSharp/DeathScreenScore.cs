@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Steamworks;
 using TMPro;
 using UnityEngine;
@@ -26,16 +28,53 @@ public class DeathScreenScore : MonoBehaviour
 	private HighScores leader;
 
 	private bool highScoreSet;
-
-	private void Start()
+	public List<string> deathStatuses = new List<string>();
+	[SerializeField]
+	public List<StringArrayWrapper> deathReasons = new List<StringArrayWrapper>();
+	private Dictionary<string, string[]> deathReasonsDict = new Dictionary<string, string[]>
 	{
-		SteamAPI.Init();
+
+	};
+
+	[System.Serializable]
+	public class StringArrayWrapper
+	{
+		public string attacker, reason;
 	}
 
 	private void Awake()
 	{
+		print(deathReasons);
+		foreach(StringArrayWrapper reason in deathReasons)
+		{
+			string[] old;	
+			try
+			{
+				old = deathReasonsDict[reason.attacker];
+			}
+			catch
+			{
+				old = new string[0];
+			}
+			string[] newReasons = old.Concat(new string[] { reason.reason }).ToArray();
+			deathReasonsDict[reason.attacker] = newReasons;
+			foreach(string reasonF in newReasons.ToList()) print(reasonF);
+		}
 		Cursor.visible = true;
 		score = GameObject.Find("Player").GetComponent<GameManager>().score;
+		print(deathReasonsDict.TryGetValue(PlayerPrefs.GetString("deathReason"), out string[] reasonList));
+		string reasonUsing = reasonList[Random.Range(0, reasonList.Length)];
+		SteamAPI.Init();
+		if(!Application.isEditor)
+			SteamFriends.SetRichPresence("st", reasonUsing + " and " + deathStatuses[Random.Range(0, deathStatuses.Count)] + ". " + score + " score on " + PlayerPrefs.GetString("diff"));
+		if(PlayerPrefs.HasKey("tark") && PlayerPrefs.GetInt("tark") == 1 && PlayerPrefs.GetString("diff") == "Unfair")
+		{
+			int choice = UnityEngine.Random.Range(1, 3);
+			if (choice == 1)
+				SteamFriends.SetRichPresence("st", "Got tarkov'd");
+			else if (choice == 2)
+				SteamFriends.SetRichPresence("st", "(head, eyes)");
+		}
 		started = false;
 		Object.Destroy(GameObject.Find("Player"));
 		text.text = "Score: " + score;

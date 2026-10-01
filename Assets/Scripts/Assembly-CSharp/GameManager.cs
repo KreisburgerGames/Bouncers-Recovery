@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Steamworks;
 using TMPro;
 using UnityEngine;
@@ -269,6 +270,11 @@ public class GameManager : MonoBehaviour
     private int unfairHealthMin;
     private int unfairPassiveHealMax;
 
+	public List<string> statusSuffixes, unfairStatuses = new List<string>();
+	
+	private string statusSuffix, unfairStatus;
+	public string lastDamage;
+
     private void Start()
 	{
 		SteamAPI.Init();
@@ -279,6 +285,17 @@ public class GameManager : MonoBehaviour
 		UnityEngine.Object.FindFirstObjectByType<Bouncer>().gameObject.GetComponent<TrailRenderer>().enabled = false;
 		UnityEngine.Object.FindFirstObjectByType<Bouncer>().gameObject.transform.position = new Vector2(UnityEngine.Random.Range(UnityEngine.Object.FindFirstObjectByType<Camera>().ScreenToWorldPoint(new Vector3(Screen.width, 0f, 0f)).x * -1f + 1f, UnityEngine.Object.FindFirstObjectByType<Camera>().ScreenToWorldPoint(new Vector3(Screen.width, 0f, 0f)).x - 1f), UnityEngine.Random.Range(UnityEngine.Object.FindFirstObjectByType<Camera>().ScreenToWorldPoint(new Vector3(0f, Screen.height, 0f)).y * -1f + 1f, UnityEngine.Object.FindFirstObjectByType<Camera>().ScreenToWorldPoint(new Vector3(0f, Screen.height, 0f)).y - 1f));
 		UnityEngine.Object.FindFirstObjectByType<Bouncer>().gameObject.GetComponent<TrailRenderer>().enabled = true;
+		statusSuffix = statusSuffixes[UnityEngine.Random.Range(0, statusSuffixes.Count)];
+		unfairStatus = unfairStatuses[UnityEngine.Random.Range(0, unfairStatuses.Count)];
+		if(MathF.Round(UnityEngine.Random.Range(4.90f, 5.47f), 2) == 5.45f && PlayerPrefs.GetString("diff") == "Unfair")
+		{
+			if(UnityEngine.Random.Range(0, 2) == 1)
+				unfairStatus = "Getting tarkov'd";
+			else
+				unfairStatus = "Avoiding (head, eyes)";
+			PlayerPrefs.SetInt("tark", 1);
+		}
+		else PlayerPrefs.SetInt("tark", 0);
 	}
 
 	private void Awake()
@@ -331,6 +348,13 @@ public class GameManager : MonoBehaviour
 
 	private void Update()
 	{
+		string mode = PlayerPrefs.GetString("diff");
+		if(!Application.isEditor)
+			if(mode != "Unfair")
+				SteamFriends.SetRichPresence("st", mode + " mode and " + statusSuffix + ". Score: " + score);
+			else
+				SteamFriends.SetRichPresence("st", unfairStatus + ". Score: " + score);
+		
 		if (!isCountdown)
 		{
 			timeSurvived += Time.deltaTime;
@@ -678,6 +702,7 @@ public class GameManager : MonoBehaviour
 				player.chromatic.intensity.Override(0f);
 				player.grain.intensity.Override(0f);
 				falling = true;
+				PlayerPrefs.SetString("deathReason", lastDamage);
 				UnityEngine.Object.FindFirstObjectByType<AudioManager>().Play("death");
 				Array.Find(UnityEngine.Object.FindFirstObjectByType<AudioManager>().sounds, (Sound x) => x.name == "main theme").audioSource.Stop();
 				UnityEngine.Object.FindFirstObjectByType<AchivementManager>().GiveAchivement("Ouch");

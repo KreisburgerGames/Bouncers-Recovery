@@ -308,7 +308,6 @@ GameObject:
   - component: {fileID: 53}
   - component: {fileID: 39}
   - component: {fileID: 83}
-  - component: {fileID: 82}
   - component: {fileID: 81}
   m_Layer: 5
   m_Name: Uploading
@@ -1106,6 +1105,40 @@ MonoBehaviour:
   player: {fileID: 1995522575808536, guid: d5289bbf59141254788beea5e09f24c7, type: 3}
   camera: {fileID: 23}
   highscore: {fileID: 438937457}
+  deathStatuses:
+  - died
+  - was unalived
+  - got slammed
+  - got out-gaming chair'd
+  - ran out of HP
+  - lost the game
+  deathReasons:
+  - attacker: bouncer
+    reason: Hit by a bouncer
+  - attacker: bouncer
+    reason: Knocked over by a bouncer
+  - attacker: bouncer
+    reason: Peppered by bouncers
+  - attacker: asteroid
+    reason: Tracked down by an asteroid
+  - attacker: asteroid
+    reason: Couldn't avoid the asteroid
+  - attacker: ms
+    reason: Couldn't outrun the mini square
+  - attacker: ms
+    reason: Ran into the mini square
+  - attacker: good kid
+    reason: Ran into a wall
+  - attacker: good kid
+    reason: Didn't even care that it's over
+  - attacker: good kid
+    reason: Tried to leave the area
+  - attacker: good kid
+    reason: Didn't even care there's a wall
+  - attacker: dasher
+    reason: Caught off guard by a dasher
+  - attacker: dasher
+    reason: Did not move out the way of a dasher
 --- !u!114 &60
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1583,23 +1616,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highscoreText: {fileID: 83}
---- !u!114 &82
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b6cae6d4c2b94371ed3101625003f07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 0}
-  diff: {fileID: 70}
-  player: {fileID: 1995522575808536, guid: d5289bbf59141254788beea5e09f24c7, type: 3}
-  camera: {fileID: 23}
-  highscore: {fileID: 0}
 --- !u!114 &83
 MonoBehaviour:
   m_ObjectHideFlags: 0

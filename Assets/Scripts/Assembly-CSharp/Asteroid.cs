@@ -137,18 +137,22 @@ public class Asteroid : MonoBehaviour
 			if (PlayerPrefs.GetString("diff") == "Easy")
 			{
 				player.health -= Random.Range(easyMinDamage, easyMaxDamage);
+				manager.lastDamage = "asteroid";
 			}
 			if (PlayerPrefs.GetString("diff") == "Medium")
 			{
 				player.health -= Random.Range(mediumMinDamage, mediumMaxDamage);
+				manager.lastDamage = "asteroid";
 			}
 			if (PlayerPrefs.GetString("diff") == "Hard")
 			{
 				player.health -= Random.Range(hardMinDamage, hardMaxDamage);
+				manager.lastDamage = "asteroid";
 			}
 			if (PlayerPrefs.GetString("diff") == "Unfair")
 			{
 				player.health -= Random.Range(unfairMinDamage, unfairMaxDamage);
+				manager.lastDamage = "asteroid";
 			}
 			Object.Instantiate(bloodSplash, base.transform.position, Quaternion.identity);
 			Object.FindFirstObjectByType<ScreenShake>().start = true;

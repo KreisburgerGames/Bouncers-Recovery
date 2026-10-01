@@ -4,6 +4,8 @@ using UnityEngine.Audio;
 using System.Security.Cryptography;
 using System.IO;
 using System.Text;
+using Steamworks;
+using System.Collections.Generic;
 
 
 public class MainMenu : MonoBehaviour
@@ -14,6 +16,7 @@ public class MainMenu : MonoBehaviour
 	private bool started;
 	public AudioMixer mixer;
 	private float value;
+	public List<string> menuStatuses = new List<string>();
 
     public static string Decrypt(string cipherText, string password, string salt)
     {
@@ -37,6 +40,15 @@ public class MainMenu : MonoBehaviour
 
 	private void Awake()
 	{
+		SteamAPI.Init();
+		if(Application.isEditor)
+			SteamFriends.SetRichPresence("st", "In his fuckass lil Unity project");
+		else
+			SteamFriends.SetRichPresence("st", menuStatuses[UnityEngine.Random.Range(0, menuStatuses.Count)]);
+		SteamUserStats.GetAchievement("SVRPT", out bool svrpt);
+		if(svrpt && UnityEngine.Random.Range(1, 11) == 3)
+			SteamFriends.SetRichPresence("st", "Hopping on SteamVR Performance Test");
+		SteamFriends.SetRichPresence("steam_display", "#status");
 		if (!PlayerPrefs.HasKey("mouseControls"))
 		{
 			PlayerPrefs.SetInt("mouseControls", 1);

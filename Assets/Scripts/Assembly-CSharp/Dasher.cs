@@ -3,6 +3,7 @@ using UnityEngine;
 public class Dasher : MonoBehaviour
 {
 	private Rigidbody2D rb;
+	private GameManager manager;
 
 	private Player player;
 
@@ -30,6 +31,7 @@ public class Dasher : MonoBehaviour
 
     private void Awake()
 	{
+		manager = FindAnyObjectByType<GameManager>();
 		player = Object.FindFirstObjectByType<Player>();
 		rb = GetComponent<Rigidbody2D>();
 		switch (Random.Range(1, 5))
@@ -72,18 +74,22 @@ public class Dasher : MonoBehaviour
 			if (PlayerPrefs.GetString("diff") == "Easy")
 			{
 				player.health -= Random.Range(easyMinDamage, easyMaxDamage);
+				manager.lastDamage = "dasher";
 			}
 			if (PlayerPrefs.GetString("diff") == "Medium")
 			{
 				player.health -= Random.Range(mediumMinDamage, mediumMaxDamage);
+				manager.lastDamage = "dasher";
 			}
 			if (PlayerPrefs.GetString("diff") == "Hard")
 			{
 				player.health -= Random.Range(hardMinDamage, hardMaxDamage);
+				manager.lastDamage = "dasher";
 			}
 			if (PlayerPrefs.GetString("diff") == "Unfair")
 			{
 				player.health -= Random.Range(unfairMinDamage, unfairMaxDamage);
+				manager.lastDamage = "dasher";
 			}
 			Object.Instantiate(bloodSplash, base.transform.position, Quaternion.identity);
 			Object.FindFirstObjectByType<ScreenShake>().start = true;

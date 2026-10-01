@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Steamworks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -30,6 +31,7 @@ public class SettingsMenu : MonoBehaviour
 
 	public TMP_Text multText;
 	private int index = 0;
+	public List<string> settingsStatused = new List<string>();
 
 	private void CheckGraphics()
 	{
@@ -120,6 +122,9 @@ public class SettingsMenu : MonoBehaviour
 		{
 			graphicsDropdown.value = PlayerPrefs.GetInt("graphics");
 		}
+		SteamAPI.Init();
+		if(!Application.isEditor)
+			SteamFriends.SetRichPresence("st", settingsStatused[UnityEngine.Random.Range(0, settingsStatused.Count)]);
 	}
 
 	public void SetResolution(int resIndex)

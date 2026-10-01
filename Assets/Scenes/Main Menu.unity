@@ -2586,6 +2586,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keepOnSettingsLoad: []
   mixer: {fileID: 24100000, guid: 304e65031728fc54ba3ca2e6a3e5e6fa, type: 2}
+  menuStatuses:
+  - Sitting in the menu
+  - Watching the menu decorations
+  - woah, colors, in the menu
 --- !u!114 &115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3692,7 +3696,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v1.2.17
+  m_text: v1.2.26
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5f7512ea08ac7cf44b88783f4be5229c, type: 2}
   m_sharedMaterial: {fileID: 6610091024842019846, guid: 5f7512ea08ac7cf44b88783f4be5229c, type: 2}

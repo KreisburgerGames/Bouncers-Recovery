@@ -97,21 +97,25 @@ public class MiniSquare : MonoBehaviour
 			{
 				num = UnityEngine.Random.Range(easyMinDamage, easyMaxDamage + 1);
 				player.health -= num;
+				manager.lastDamage = "ms";
 			}
 			else if (PlayerPrefs.GetString("diff") == "Medium")
 			{
 				num = UnityEngine.Random.Range(mediumMinDamage, mediumMaxDamage + 1);
 				player.health -= num;
+				manager.lastDamage = "ms";
 			}
 			else if (PlayerPrefs.GetString("diff") == "Hard")
 			{
 				num = UnityEngine.Random.Range(hardMinDamage, hardMaxDamage + 1);
 				player.health -= num;
+				manager.lastDamage = "ms";
 			}
 			else if (PlayerPrefs.GetString("diff") == "Unfair")
 			{
 				num = UnityEngine.Random.Range(unfairMinDamage, unfairMaxDamage + 1);
 				player.health -= num;
+				manager.lastDamage = "ms";
 			}
 			else
 			{

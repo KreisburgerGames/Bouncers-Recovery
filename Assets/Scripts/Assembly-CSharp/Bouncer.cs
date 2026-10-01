@@ -360,21 +360,25 @@ public class Bouncer : MonoBehaviour
 				{
 					num = r.Next(player.easyDamageMin, player.easyDamageMax);
 					player.health -= num;
+					manager.lastDamage = "bouncer";
 				}
 				else if (PlayerPrefs.GetString("diff") == "Medium")
 				{
 					num = r.Next(player.mediumDamageMin, player.mediumDamageMax);
 					player.health -= num;
+					manager.lastDamage = "bouncer";
 				}
 				else if (PlayerPrefs.GetString("diff") == "Hard")
 				{
 					num = r.Next(player.hardDamageMin, player.hardDamageMax);
 					player.health -= num;
+					manager.lastDamage = "bouncer";
 				}
 				else if (PlayerPrefs.GetString("diff") == "Unfair")
 				{
 					num = r.Next(player.unfairDamageMin, player.unfairDamageMax);
 					player.health -= num;
+					manager.lastDamage = "bouncer";
 				}
 				else
 				{

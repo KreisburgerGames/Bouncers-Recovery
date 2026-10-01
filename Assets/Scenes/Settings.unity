@@ -4617,6 +4617,10 @@ MonoBehaviour:
   resolutionDropdown: {fileID: 469747680}
   shakeMultiplier: {fileID: 222}
   multText: {fileID: 1046479666}
+  settingsStatused:
+  - Pushing some important buttons
+  - Messing with the settings
+  - In da control panel
 --- !u!114 &237
 MonoBehaviour:
   m_ObjectHideFlags: 0

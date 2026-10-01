@@ -329,6 +329,7 @@ public class Player : MonoBehaviour
 		{
 			if (!hasSheild)
 			{
+				manager.lastDamage = "good kid";
 				int num = Random.Range(3, 8);
 				health -= num;
 				wall = true;
@@ -352,6 +353,7 @@ public class Player : MonoBehaviour
 		{
 			if (!hasSheild)
 			{
+				manager.lastDamage = "good kid";
 				int num = Random.Range(3, 8);
 				health -= num;
 				rb.velocity = new Vector2(force, rb.velocity.y);
@@ -375,6 +377,7 @@ public class Player : MonoBehaviour
 		{
 			if (!hasSheild)
 			{
+				manager.lastDamage = "good kid";
 				int num = Random.Range(3, 8);
 				health -= num;
 				rb.velocity = new Vector2(rb.velocity.x, 0f - force);
@@ -398,6 +401,7 @@ public class Player : MonoBehaviour
 		{
 			if (!hasSheild)
 			{
+				manager.lastDamage = "good kid";
 				int num = Random.Range(3, 7);
 				health -= num;
 				wall = true;
