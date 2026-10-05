@@ -41,6 +41,9 @@ public class MainMenu : MonoBehaviour
 	private void Awake()
 	{
 		SteamAPI.Init();
+		SteamUserStats.RequestUserStats(SteamUser.GetSteamID());
+		SteamUserStats.GetUserStat(SteamUser.GetSteamID(), "BouncesSurvived", out int bS);
+		print(bS);
 		if(Application.isEditor)
 			SteamFriends.SetRichPresence("st", "In his fuckass lil Unity project");
 		else

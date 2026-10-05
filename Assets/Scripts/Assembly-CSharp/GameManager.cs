@@ -269,6 +269,7 @@ public class GameManager : MonoBehaviour
 	public bool purgeCollected;
     private int unfairHealthMin;
     private int unfairPassiveHealMax;
+	public int bounces;
 
 	public List<string> statusSuffixes, unfairStatuses = new List<string>();
 	
@@ -702,6 +703,7 @@ public class GameManager : MonoBehaviour
 				player.chromatic.intensity.Override(0f);
 				player.grain.intensity.Override(0f);
 				falling = true;
+				FindFirstObjectByType<AchivementManager>().AddBounces(bounces);
 				PlayerPrefs.SetString("deathReason", lastDamage);
 				UnityEngine.Object.FindFirstObjectByType<AudioManager>().Play("death");
 				Array.Find(UnityEngine.Object.FindFirstObjectByType<AudioManager>().sounds, (Sound x) => x.name == "main theme").audioSource.Stop();

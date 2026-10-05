@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AchivementManager : MonoBehaviour
 {
+
 	private void Start()
 	{
 		SteamAPI.Init();
@@ -20,10 +21,11 @@ public class AchivementManager : MonoBehaviour
 		SteamUserStats.StoreStats();
 	}
 
-	public void AddBounce()
+	public void AddBounces(int bounces)
 	{
 		SteamUserStats.RequestUserStats(SteamUser.GetSteamID());
-		SteamUserStats.SetStat("BouncesSurvived", 1);
+		SteamUserStats.GetUserStat(SteamUser.GetSteamID(), "BouncesSurvived", out int b);
+		SteamUserStats.SetStat("BouncesSurvived", b + bounces);
 		SteamUserStats.StoreStats();
 	}
 }

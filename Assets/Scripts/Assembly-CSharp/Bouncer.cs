@@ -212,7 +212,7 @@ public class Bouncer : MonoBehaviour
 					rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + (float)r.Next(0, directionRange));
 				}
 			}
-			UnityEngine.Object.FindFirstObjectByType<AchivementManager>().AddBounce();
+			manager.bounces ++;
 			lastBounce = "right";
 			if (manager.canScore)
 			{
@@ -262,7 +262,7 @@ public class Bouncer : MonoBehaviour
 				}
 			}
 			lastBounce = "left";
-			UnityEngine.Object.FindFirstObjectByType<AchivementManager>().AddBounce();
+			manager.bounces ++;
 			damage = true;
 			if (manager.canScore)
 			{
@@ -287,7 +287,7 @@ public class Bouncer : MonoBehaviour
 			vertical = false;
 			rb.velocity = new Vector2(rb.velocity.x, UnityEngine.Random.Range(startSpeed - 2f, maxVelocity));
 			lastBounce = "down";
-			UnityEngine.Object.FindFirstObjectByType<AchivementManager>().AddBounce();
+			manager.bounces ++;
 			if (UnityEngine.Random.Range(1, 6) == 3)
 			{
 				rb.velocity = new Vector2(rb.velocity.x * -1f + (float)UnityEngine.Random.Range(-2, 2), rb.velocity.y);
@@ -309,7 +309,7 @@ public class Bouncer : MonoBehaviour
 			vertical = false;
 			rb.velocity = new Vector2(rb.velocity.x, UnityEngine.Random.Range(0f - maxVelocity, 0f - startSpeed + 2f));
 			lastBounce = "up";
-			UnityEngine.Object.FindFirstObjectByType<AchivementManager>().AddBounce();
+			manager.bounces ++;
 			if (UnityEngine.Random.Range(1, 6) == 3)
 			{
 				rb.velocity = new Vector2(rb.velocity.x * -1f + (float)UnityEngine.Random.Range(-2, 2), rb.velocity.y);
