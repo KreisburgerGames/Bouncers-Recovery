@@ -270,6 +270,12 @@ public class GameManager : MonoBehaviour
     private int unfairHealthMin;
     private int unfairPassiveHealMax;
 	public int bounces;
+	public int powerupXP = 0;
+	public int healXP = 0;
+	public int asteroidXp = 0;
+	public int totalXp = 0;
+	public int oldXP, oldLevel, oldXpNeeded, oldXpStarted;
+	private float xpMultiplier = 1f;
 
 	public List<string> statusSuffixes, unfairStatuses = new List<string>();
 	
@@ -279,6 +285,11 @@ public class GameManager : MonoBehaviour
     private void Start()
 	{
 		SteamAPI.Init();
+		SteamUserStats.RequestUserStats(SteamUser.GetSteamID());
+		SteamUserStats.GetUserStat(SteamUser.GetSteamID(), "xp", out oldXP);
+		SteamUserStats.GetUserStat(SteamUser.GetSteamID(), "level", out oldLevel);
+		SteamUserStats.GetUserStat(SteamUser.GetSteamID(), "nextLevel", out oldXpNeeded);
+		SteamUserStats.GetUserStat(SteamUser.GetSteamID(), "startedXp", out oldXpStarted);
 		score = 0;
 		lastHit = 1;
 		bouncers = 1;
@@ -328,21 +339,25 @@ public class GameManager : MonoBehaviour
 		{
 			scoreGoalMultiplier = 6f;
 			easyScoreGoal = UnityEngine.Random.Range(easyPowerupScoreMin, easyPowerupScoreMax + 1);
+			xpMultiplier = 0.5f;
 		}
 		else if (PlayerPrefs.GetString("diff") == "Medium")
 		{
 			scoreGoalMultiplier = 5.5f;
 			mediumScoreGoal = UnityEngine.Random.Range(mediumPowerupScoreMin, mediumPowerupScoreMax + 1);
+			xpMultiplier	= 1f;
 		}
 		else if (PlayerPrefs.GetString("diff") == "Hard")
 		{
 			scoreGoalMultiplier = 4.5f;
 			hardScoreGoal = UnityEngine.Random.Range(hardPowerupScoreMin, hardPowerupScoreMax + 1);
+			xpMultiplier = 1.2f;
 		}
 		else if (PlayerPrefs.GetString("diff") == "Unfair")
 		{
 			scoreGoalMultiplier = 5f;
 			unfairScoreGoal = UnityEngine.Random.Range(unfairPowerupScoreMin, unfairPowerupScoreMax + 1);
+			xpMultiplier = 1.5f;
 		}
 		played = false;
 	}
@@ -703,6 +718,15 @@ public class GameManager : MonoBehaviour
 				player.chromatic.intensity.Override(0f);
 				player.grain.intensity.Override(0f);
 				falling = true;
+				totalXp = (int)Mathf.Round((bounces + powerupXP + healXP + asteroidXp) * xpMultiplier);
+				SteamUserStats.GetUserStat(SteamUser.GetSteamID(), "level", out int level);
+				SteamUserStats.GetUserStat(SteamUser.GetSteamID(), "nextLevel", out int xpNeeded);
+				int newXp = oldXP + totalXp;
+				SteamUserStats.SetStat("xp", newXp);
+				if(newXp >= xpNeeded)
+				{
+					LevelUp(xpNeeded, level, newXp);
+				}
 				FindFirstObjectByType<AchivementManager>().AddBounces(bounces);
 				PlayerPrefs.SetString("deathReason", lastDamage);
 				UnityEngine.Object.FindFirstObjectByType<AudioManager>().Play("death");
@@ -744,6 +768,25 @@ public class GameManager : MonoBehaviour
 			UnityEngine.Object.DontDestroyOnLoad(playerRef);
 			scene = SceneManager.GetActiveScene().name;
 			SceneManager.LoadScene("Death");
+		}
+	}
+
+	private void LevelUp(int xpNeeded, int level, int newXp)
+	{
+		SteamUserStats.SetStat("startedXp", xpNeeded);
+		int newXpGoal = (int)Mathf.Round(xpNeeded * 1.5f * (1 + (level/100)));
+		SteamUserStats.SetStat("nextLevel", newXpGoal);
+		SteamUserStats.SetStat("level", level + 1);
+		if (level + 1 % 5 == 0)
+		{
+			SteamUserStats.GetUserStat(SteamUser.GetSteamID(), "skillpoints", out int sp);
+			sp++;
+			SteamUserStats.SetStat("skillpoints", sp);
+		}
+		SteamUserStats.StoreStats();
+		if(newXp > newXpGoal)
+		{
+			LevelUp(newXpGoal, level + 1, newXp);
 		}
 	}
 

@@ -137,6 +137,7 @@ public class StarPowerup : MonoBehaviour
 		{
 			manager.scoreGoal = manager.score + (int)MathF.Round(manager.score / num);
 		}
+		player.manager.powerupXP += 15;
 		int num2 = UnityEngine.Random.Range(10, 25);
 		player.maxHealth += num2;
 		Mathf.Clamp(player.maxHealth, 100, 165);

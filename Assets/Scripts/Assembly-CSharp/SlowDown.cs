@@ -40,7 +40,7 @@ public class SlowDown : MonoBehaviour
 		{
 			lowPass.cutoffFrequency = Mathf.Lerp(lowPass.cutoffFrequency, cutoffNormal, Time.deltaTime * cutoffSpeed);
 		}
-		if (slowDown && Object.FindFirstObjectByType<GameManager>().countdownTime <= 0f)
+		if (slowDown && Object.FindFirstObjectByType<GameManager>().countdownTime <= 0f && Time.timeScale == 1f)
 		{
 			if (!Object.FindFirstObjectByType<PauseMenu>().paused)
 			{

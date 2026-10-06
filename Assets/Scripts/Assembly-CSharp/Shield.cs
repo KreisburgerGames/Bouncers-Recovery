@@ -48,6 +48,7 @@ public class Shield : MonoBehaviour
 			{
 				player.gameObject.GetComponent<SpriteRenderer>().sprite = player.HellShieldTexture;
 			}
+			player.manager.powerupXP += 15;
 			player.manager.shieldCollected = true;
 			Object.FindFirstObjectByType<AudioManager>().Play("powerup");
 			Object.Instantiate(shieldCollect, base.transform.position, Quaternion.identity);

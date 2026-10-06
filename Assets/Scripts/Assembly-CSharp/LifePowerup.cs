@@ -17,6 +17,7 @@ public class LifePowerup : MonoBehaviour
 		{
 			player.lives++;
 			Object.FindFirstObjectByType<AudioManager>().Play("powerup");
+			player.manager.powerupXP += 15;
 			Object.Instantiate(plusLife, base.transform.position, Quaternion.identity);
 			if (player.lives == 3)
 			{

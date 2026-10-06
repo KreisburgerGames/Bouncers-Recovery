@@ -25,6 +25,7 @@ public class HealthPack : MonoBehaviour
 			{
 				num = Random.Range(player.easyHealMin, player.easyHealMax + 1);
 				player.health += num;
+				player.manager.healXP += (int)Mathf.Round(num/2);
 				Object.Instantiate(heal, base.transform.position, Quaternion.identity);
 				manager.tried = false;
 				Object.Destroy(base.gameObject);
@@ -33,6 +34,7 @@ public class HealthPack : MonoBehaviour
 			{
 				num = Random.Range(player.mediumHealMin, player.mediumHealMax + 1);
 				player.health += num;
+				player.manager.healXP += (int)Mathf.Round(num/2);
 				Object.Instantiate(heal, base.transform.position, Quaternion.identity);
 				manager.tried = false;
 				Object.Destroy(base.gameObject);
@@ -41,6 +43,7 @@ public class HealthPack : MonoBehaviour
 			{
 				num = Random.Range(player.hardHealMin, player.hardHealMax + 1);
 				player.health += num;
+				player.manager.healXP += (int)Mathf.Round(num/2);
 				Object.Instantiate(heal, base.transform.position, Quaternion.identity);
 				manager.tried = false;
 				Object.Destroy(base.gameObject);
@@ -49,6 +52,7 @@ public class HealthPack : MonoBehaviour
 			{
 				num = Random.Range(player.unfairHealMin, player.unfairHealMax + 1);
 				player.health += num;
+				player.manager.healXP += (int)Mathf.Round(num/2);
 				Object.Instantiate(heal, base.transform.position, Quaternion.identity);
 				manager.tried = false;
 				Object.Destroy(base.gameObject);

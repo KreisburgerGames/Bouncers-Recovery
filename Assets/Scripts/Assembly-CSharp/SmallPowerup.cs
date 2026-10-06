@@ -14,6 +14,7 @@ public class SmallPowerup : MonoBehaviour
 			component.gameObject.GetComponent<TrailRenderer>().startWidth = size;
 			component.speed *= 1f + size;
 			component.manager.smallCollected = true;
+			component.manager.powerupXP += 15;
 			Object.Destroy(base.gameObject);
 		}
 	}

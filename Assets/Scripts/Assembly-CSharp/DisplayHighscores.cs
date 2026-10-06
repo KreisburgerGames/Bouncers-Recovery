@@ -46,6 +46,7 @@ public class DisplayHighscores : MonoBehaviour
 				rScores[i].text = highscoreList[i].score.ToString();
 				SteamFriends.RequestUserInformation((CSteamID)Convert.ToUInt64(highscoreList[i].username), bRequireNameOnly: false);
 				rNames[i].text = i + 1 + ". " + SteamFriends.GetFriendPersonaName((CSteamID)Convert.ToUInt64(highscoreList[i].username)) + " - ";
+				rNames[i].gameObject.GetComponentInChildren<ProfileViewerHook>().id = (CSteamID)Convert.ToUInt64(highscoreList[i].username);
 				if (SteamFriends.GetFriendPersonaName((CSteamID)Convert.ToUInt64(highscoreList[i].username)) == "[Unknown]")
 				{
 					rNames[i].text = i + 1 + ". Loading... - ";
@@ -60,7 +61,7 @@ public class DisplayHighscores : MonoBehaviour
 		}
 	}
 
-	private Texture2D GetSteamImageAstexture(int imageID)
+	public static Texture2D GetSteamImageAstexture(int imageID)
 	{
 		Texture2D texture2D = null;
 		if (SteamUtils.GetImageSize(imageID, out var pnWidth, out var pnHeight))

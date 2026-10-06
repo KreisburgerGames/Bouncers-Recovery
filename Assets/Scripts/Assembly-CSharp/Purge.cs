@@ -39,6 +39,7 @@ public class Purge : MonoBehaviour
 			{
 				Object.Instantiate(position: new Vector3(Random.Range((width - spawnPadding) * -1f, width - spawnPadding), Random.Range((height - spawnPadding) * -1f, height - spawnPadding), base.transform.position.z), original: this.bouncer, rotation: Quaternion.identity);
 			}
+			player.manager.powerupXP += 15;
 			player.GetComponentInChildren<SlowDown>().slowDown = false;
 			player.manager.purgeCollected = true;
 			Object.FindFirstObjectByType<AudioManager>().Play("powerup");

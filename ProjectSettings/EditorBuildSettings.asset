@@ -2,8 +2,8 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1045 &1
 EditorBuildSettings:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
+  serializedVersion: 2
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Main Menu.unity
@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LeaderboardsSelect.unity
     guid: fea0ee158bfdfa9408a35d7b0d84ba18
+  - enabled: 1
+    path: Assets/Scenes/Skill Tree.unity
+    guid: 23b0fbdd95279f549abaeb648644263f
   m_configObjects: {}

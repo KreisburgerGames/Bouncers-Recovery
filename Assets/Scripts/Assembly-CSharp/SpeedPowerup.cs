@@ -19,6 +19,7 @@ public class SpeedPowerup : MonoBehaviour
 			Object.Instantiate(claim, base.transform.position, Quaternion.identity);
 			Object.Instantiate(component.floatText, base.transform.position, Quaternion.identity).GetComponent<FloatText>().Spawn("+" + num + " Speed!", Color.blue, "true", null, 2f, 4f);
 			Object.FindFirstObjectByType<AudioManager>().Play("powerup");
+			component.manager.powerupXP += 15;
 			Object.Destroy(base.gameObject);
 		}
 	}

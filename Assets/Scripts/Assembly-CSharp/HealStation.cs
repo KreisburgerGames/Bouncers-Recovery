@@ -44,12 +44,12 @@ public class HealStation : MonoBehaviour
 			base.transform.position = Vector2.Lerp(base.transform.position, position, entrySpeed * Time.deltaTime);
 			if (inZone)
 			{
-				MonoBehaviour.print("yes");
 				tick += Time.deltaTime;
 				if (tick >= tickTime)
 				{
 					tick = 0f;
 					player.health += healAmount;
+					player.manager.healXP += (int)Mathf.Round(healAmount/2);
 				}
 			}
 			else

@@ -100,6 +100,7 @@ public class Asteroid : MonoBehaviour
 				if (!hit)
 				{
 					Object.FindFirstObjectByType<AchivementManager>().GiveAchivement("Juked");
+					manager.asteroidXp += 20;
 				}
 			}
 			if (base.transform.position.y > player.height + 10f)

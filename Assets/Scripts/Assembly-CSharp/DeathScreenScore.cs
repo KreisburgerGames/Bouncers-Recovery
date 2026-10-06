@@ -44,7 +44,6 @@ public class DeathScreenScore : MonoBehaviour
 
 	private void Awake()
 	{
-		print(deathReasons);
 		foreach(StringArrayWrapper reason in deathReasons)
 		{
 			string[] old;	
@@ -58,11 +57,13 @@ public class DeathScreenScore : MonoBehaviour
 			}
 			string[] newReasons = old.Concat(new string[] { reason.reason }).ToArray();
 			deathReasonsDict[reason.attacker] = newReasons;
-			foreach(string reasonF in newReasons.ToList()) print(reasonF);
 		}
 		Cursor.visible = true;
-		score = GameObject.Find("Player").GetComponent<GameManager>().score;
-		print(deathReasonsDict.TryGetValue(PlayerPrefs.GetString("deathReason"), out string[] reasonList));
+		GameManager manager = GameObject.Find("Player").GetComponent<GameManager>();
+		score = manager.score;
+		DeathXPBar d = FindFirstObjectByType<DeathXPBar>();
+		d.Init(manager.oldLevel, manager.oldXP, manager.oldXpNeeded, manager.oldXpStarted);
+		deathReasonsDict.TryGetValue(PlayerPrefs.GetString("deathReason"), out string[] reasonList);
 		string reasonUsing = reasonList[Random.Range(0, reasonList.Length)];
 		SteamAPI.Init();
 		if(!Application.isEditor)
