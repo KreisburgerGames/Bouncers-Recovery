@@ -8,11 +8,12 @@ using UnityEngine;
 public class DeathXPBar : MonoBehaviour
 {
     public UnityEngine.UI.Image xpBar, leadBar;
-    public TMP_Text levelText, xpText;
+    public TMP_Text levelText, xpText, xpGainText;
     private int xpAdding;
     private int oldLevel, oldXp, oldXpNeeded, oldXpStarted, newLevel, newXp, newXpNeeded, newXpStarted;
     private int currentXP;
     private Coroutine c;
+    private int xpGain;
 
     void Awake()
     {
@@ -41,6 +42,8 @@ public class DeathXPBar : MonoBehaviour
         xpBar.fillAmount = (float)(oldXp-oldXpStarted)/(oldXpNeeded-oldXpStarted);
         levelText.text = $"Level {oldLevel}";
         xpText.text = $"{oldXp}/{oldXpNeeded}xp";
+        xpGain = newXp - oldXp;
+        xpGainText.text = $"+{xpGain}xp";
         xpAdding = GameManager.instance.totalXp;
         StartCoroutine(AddXP());
     }
@@ -68,6 +71,8 @@ public class DeathXPBar : MonoBehaviour
             xpBar.fillAmount = Mathf.Lerp(xpBar.fillAmount, 1, time * 3 * Time.deltaTime);
             int newXpText = (int)Mathf.Round(Mathf.Lerp(xp, xpGoal, xpBar.fillAmount));
             xpText.text = $"{newXpText}/{xpGoal}xp";
+            xpGain = newXp - newXpText;
+            xpGainText.text = $"+{xpGain}xp";
             yield return null;
         }
         xpBar.fillAmount = 0f;
@@ -90,7 +95,7 @@ public class DeathXPBar : MonoBehaviour
         {
             levelCorutines.Add(LevelUp(rXp, rXpGoal, rXpStart));
             rXpStart = rXpGoal;
-            rXpGoal = (int)Mathf.Round(rXpGoal * 1.5f * (1 + (oldLevel/100)));
+            rXpGoal = (int)Mathf.Round(rXpGoal * 2.5f * (1 + (oldLevel/75f)));
             rXp = rXpStart;
         }
         foreach(IEnumerator lvl in levelCorutines)
@@ -117,9 +122,25 @@ public class DeathXPBar : MonoBehaviour
             xpBar.fillAmount = Mathf.Lerp(xpBar.fillAmount, fillAmount, t * Time.deltaTime);
             int newXpText = (int)Mathf.Lerp(currentXP, newXp, xpBar.fillAmount/fillAmount);
             xpText.text = $"{newXpText}/{newXpNeeded}xp";
+            xpGain = newXp - newXpText;
+            xpGainText.text = $"+{xpGain}xp";
             yield return null;
         }
         xpBar.fillAmount = fillAmount;
         xpText.text = $"{newXp}/{newXpNeeded}xp";
+        xpGainText.text = $"+0xp";
+        yield return new WaitForSeconds(1f);
+        t = 0f;
+        while(xpGainText.color.a > 0.001f)
+        {
+            t += Time.deltaTime;
+            UnityEngine.Color c = xpGainText.color;
+            c.a = Mathf.Lerp(c.a, 0f, t * 8f * Time.deltaTime);
+            xpGainText.color = c;
+            yield return null;
+        }
+        UnityEngine.Color f = xpGainText.color;
+        f.a = 0f;
+        xpGainText.color = f;
     }
 }

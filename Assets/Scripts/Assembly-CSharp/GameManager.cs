@@ -774,7 +774,7 @@ public class GameManager : MonoBehaviour
 	private void LevelUp(int xpNeeded, int level, int newXp)
 	{
 		SteamUserStats.SetStat("startedXp", xpNeeded);
-		int newXpGoal = (int)Mathf.Round(xpNeeded * 1.5f * (1 + (level/100)));
+		int newXpGoal = (int)Mathf.Round(xpNeeded * 2.5f * (1 + (level/75f)));
 		SteamUserStats.SetStat("nextLevel", newXpGoal);
 		SteamUserStats.SetStat("level", level + 1);
 		if (level + 1 % 5 == 0)
