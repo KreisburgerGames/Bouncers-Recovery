@@ -64,11 +64,9 @@ public class DeathXPBar : MonoBehaviour
         }
         yield return new WaitForSeconds(.5f);
         startFill = xpBar.fillAmount;
-        time = 0f;
         while (1 - xpBar.fillAmount > 0.001f)
         {
-            time += Time.deltaTime;
-            xpBar.fillAmount = Mathf.Lerp(xpBar.fillAmount, 1, time * 3 * Time.deltaTime);
+            xpBar.fillAmount = Mathf.Lerp(xpBar.fillAmount, 1, 3f * Time.deltaTime);
             int newXpText = (int)Mathf.Round(Mathf.Lerp(xp, xpGoal, xpBar.fillAmount));
             xpText.text = $"{newXpText}/{xpGoal}xp";
             xpGain = newXp - newXpText;
@@ -95,7 +93,7 @@ public class DeathXPBar : MonoBehaviour
         {
             levelCorutines.Add(LevelUp(rXp, rXpGoal, rXpStart));
             rXpStart = rXpGoal;
-            rXpGoal = (int)Mathf.Round(rXpGoal * 2.5f * (1 + (oldLevel/75f)));
+            rXpGoal = Mathf.RoundToInt(rXpGoal * 2.5f * (1 + (oldLevel/75f)));
             rXp = rXpStart;
         }
         foreach(IEnumerator lvl in levelCorutines)
@@ -115,12 +113,10 @@ public class DeathXPBar : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(.5f);
-        t = 0;
         while (fillAmount - xpBar.fillAmount > 0.001f)
         {
-            t += Time.deltaTime;
-            xpBar.fillAmount = Mathf.Lerp(xpBar.fillAmount, fillAmount, t * Time.deltaTime);
-            int newXpText = (int)Mathf.Lerp(currentXP, newXp, xpBar.fillAmount/fillAmount);
+            xpBar.fillAmount = Mathf.Lerp(xpBar.fillAmount, fillAmount, 2f * Time.deltaTime);
+            int newXpText = Mathf.RoundToInt(Mathf.Lerp(currentXP, newXp, xpBar.fillAmount/fillAmount));
             xpText.text = $"{newXpText}/{newXpNeeded}xp";
             xpGain = newXp - newXpText;
             xpGainText.text = $"+{xpGain}xp";
