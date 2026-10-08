@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Steamworks;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class ResetAchievements : MonoBehaviour
 	public GameObject confirm;
 
 	public GameObject originalButton;
+	public List<string> achievements = new List<string>();
 
 	private void Start()
 	{
@@ -24,7 +26,10 @@ public class ResetAchievements : MonoBehaviour
 
 	public void Confirm()
 	{
-		SteamUserStats.ResetAllStats(bAchievementsToo: true);
+		foreach(string s in achievements)
+		{
+			SteamUserStats.ClearAchievement(s);
+		}
 		SteamUserStats.StoreStats();
 		confirm.SetActive(value: false);
 		PlayerPrefs.SetString("Skin", "Default");

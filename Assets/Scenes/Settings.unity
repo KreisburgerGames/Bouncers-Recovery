@@ -3844,6 +3844,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   confirm: {fileID: 48}
   originalButton: {fileID: 6}
+  achievements:
+  - Time to Bounce!
+  - Juked
+  - SVRPT
+  - BulkedUp
+  - Impressive
+  - Ouch
+  - FirstSteps
+  - Void
+  - OP
+  - josh
+  - SkillIssue
+  - ???
+  - hellandback
 --- !u!114 &216
 MonoBehaviour:
   m_ObjectHideFlags: 0
